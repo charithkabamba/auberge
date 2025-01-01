@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background Gradient -->
+    <defs>
+        <linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#ffc599;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#ffe8dc;stop-opacity:0" />
+        </linearGradient>
+    </defs>
+    
+    <!-- Background Shape -->
+    <path d="M100 50 Q300 0 400 100 Q500 200 450 350 Q400 450 250 450 Q100 450 50 300 Q0 150 100 50" 
+          fill="url(#grad3)"/>
+    
+    <!-- Rocket -->
+    <g transform="translate(256,256) rotate(-45)">
+        <!-- Rocket Body -->
+        <path d="M-40 -80 L40 -80 L0 -160 Z" fill="#ff6c6c"/>
+        <rect x="-30" y="-80" width="60" height="120" rx="30" fill="#ff6c6c"/>
+        
+        <!-- Window -->
+        <circle cx="0" cy="-20" r="20" fill="#ffffff"/>
+        <circle cx="0" cy="-20" r="15" fill="#ff9d33"/>
+        
+        <!-- Flames -->
+        <path d="M-20 40 L0 80 L20 40" fill="#6c6cff"/>
+    </g>
+    
+    <!-- Timer -->
+    <g transform="translate(350,350)">
+        <circle cx="0" cy="0" r="50" fill="#ff9d33"/>
+        <text x="0" y="0" 
+              font-family="Arial" font-size="24" 
+              fill="white" text-anchor="middle" 
+              dominant-baseline="middle">10d</text>
+    </g>
+</svg>

@@ -1,0 +1,168 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=9">
+    <title> AUBERGE | CONNEXION</title>
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{% static 'frontend/images/fav.png' %}" type="image/x-icon">
+    <link rel="icon" href="{% static 'frontend/images/fav.png' %}" type="image/x-icon">
+
+    <!-- Stylesheets -->
+
+    <link href="{% static 'frontend/css/unicons.css' %}" rel="stylesheet">
+    <link href="{% static 'frontend/css/style.css' %}" rel="stylesheet">
+    <link href="{% static 'frontend/css/responsive.css' %}" rel="stylesheet">
+    <link href="{% static 'frontend/css/night-mode.css' %}" rel="stylesheet">
+    <link href="{% static 'frontend/css/step-wizard.css' %}" rel="stylesheet">
+
+    <!-- Vendor Stylesheets -->
+    <link href="{% static 'frontend/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'frontend/css/owl.carousel.css' %}" rel="stylesheet">
+    <link href="{% static 'frontend/css/owl.theme.default.min.css' %}" rel="stylesheet">
+    <link href="{% static 'frontend/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'frontend/css/semantic.min.css' %}" rel="stylesheet">
+
+    <style>
+        .invalid-feedback {
+            display: block;
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .is-invalid {
+            border-color: #dc3545 !important;
+        }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: .75rem 1.25rem;
+            margin-bottom: 1rem;
+            border: 1px solid transparent;
+            border-radius: .25rem;
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="sign-inup">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-5">
+                <div class="sign-form">
+                    <div class="sign-inner">
+                        <div class="sign-logo" id="logo">
+                            <a href="{% url 'core:home' %}">
+                                <img src="{% static 'frontend/images/logo.svg' %}" alt="">
+                            </a>
+                            <a href="{% url 'core:home' %}">
+                                <img class="logo-inverse" src="{% static 'frontend/images/dark-logo.svg' %}" alt="">
+                            </a>
+                        </div>
+                        <div class="form-dt">
+                            <div class="form-inpts checout-address-step">
+                                <form method="post" action="{% url 'users:signup' %}">
+                                    {% csrf_token %}
+                                    <div class="form-title"><h6>Création Compte</h6></div>
+                                    
+                                    {% if form.non_field_errors %}
+                                        <div class="alert alert-danger">
+                                            {% for error in form.non_field_errors %}
+                                                <p>{{ error }}</p>
+                                            {% endfor %}
+                                        </div>
+                                    {% endif %}
+
+                                    <div class="form-group pos_rel">
+                                        <input id="name" name="name" type="text" placeholder="Full name" 
+                                               class="form-control lgn_input {% if form.name.errors %}is-invalid{% endif %}" 
+                                               required="">
+                                        <i class="uil uil-user-circle lgn_icon"></i>
+                                        {% if form.name.errors %}
+                                            <div class="invalid-feedback">
+                                                {{ form.name.errors|join:", " }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group pos_rel">
+                                        <input id="email" name="email" type="email" placeholder="Email address" 
+                                               class="form-control lgn_input {% if form.email.errors %}is-invalid{% endif %}" 
+                                               required="">
+                                        <i class="uil uil-envelope lgn_icon"></i>
+                                        {% if form.email.errors %}
+                                            <div class="invalid-feedback">
+                                                {{ form.email.errors|join:", " }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group pos_rel">
+                                        <input id="phone" name="phone" type="number" placeholder="Phone number" 
+                                               class="form-control lgn_input {% if form.phone.errors %}is-invalid{% endif %}" 
+                                               required="">
+                                        <i class="uil uil-mobile-android-alt lgn_icon"></i>
+                                        {% if form.phone.errors %}
+                                            <div class="invalid-feedback">
+                                                {{ form.phone.errors|join:", " }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group pos_rel">
+                                        <input id="password1" name="password1" type="password" placeholder="Enter password" 
+                                               class="form-control lgn_input {% if form.password1.errors %}is-invalid{% endif %}" 
+                                               required="">
+                                        <i class="uil uil-padlock lgn_icon"></i>
+                                        {% if form.password1.errors %}
+                                            <div class="invalid-feedback">
+                                                {{ form.password1.errors|join:", " }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="form-group pos_rel">
+                                        <input id="password2" name="password2" type="password" placeholder="Confirm password" 
+                                               class="form-control lgn_input {% if form.password2.errors %}is-invalid{% endif %}" 
+                                               required="">
+                                        <i class="uil uil-padlock lgn_icon"></i>
+                                        {% if form.password2.errors %}
+                                            <div class="invalid-feedback">
+                                                {{ form.password2.errors|join:", " }}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <button class="login-btn hover-btn" type="submit">Créer Maintenant</button>
+                                </form>
+                            </div>
+                            <div class="signup-link">
+                                <p>Vous avez un compte? - <a href="{% url 'users:login' %}">Se connecter</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Javascript -->
+<script src="{% static 'frontend/js/jquery-3.3.1.min.js' %}"></script>
+<script src="{% static 'frontend/js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'frontend/js/owl.carousel.js' %}"></script>
+<script src="{% static 'frontend/js/semantic.min.js' %}"></script>
+<script src="{% static 'frontend/js/jquery.countdown.min.js' %}"></script>
+<script src="{% static 'frontend/js/product.thumbnail.slider.js' %}"></script>
+<script src="{% static 'frontend/js/offset_overlay.js' %}"></script>
+<script src="{% static 'frontend/js/night-mode.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
+<script src="{% static 'frontend/js/custom.js' %}"></script>
+<script src="{% static 'frontend/js/frontend.js' %}"></script>
+</body>
+</html>

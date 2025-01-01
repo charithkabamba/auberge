@@ -1,0 +1,157 @@
+{% extends 'users/admin/base.html' %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h2 class="mt-30 page-title">Plats</h2>
+        <ol class="breadcrumb mb-30">
+            <li class="breadcrumb-item"><a href="{% url 'users:admin.index' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Plats</li>
+        </ol>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card card-static-2 mb-30">
+                    <div class="card-title-2">
+                        <h4>All Products</h4>
+                        <div class="row justify-content-between align-items-center">
+                            <div class="col-lg-8">
+                                <form action="" method="GET" class="form-inline">
+                                    <div class="input-group w-100">
+                                        <input type="text" 
+                                               class="form-control" 
+                                               name="search" 
+                                               placeholder="Search products..." 
+                                               value="{{ search_query }}"
+                                               style="margin-right: 10px;">
+                                        
+                                        <select name="category" 
+                                                class="form-control" 
+                                                style="margin-right: 10px;">
+                                            <option value="">toutes les Categories</option>
+                                            {% for category in categories %}
+                                                <option value="{{ category.id }}" 
+                                                    {% if selected_category == category.id|stringformat:"s" %}selected{% endif %}>
+                                                    {{ category.name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                        
+                                        <div class="input-group-append">
+                                            <button class="btn btn-secondary" type="submit">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="col-lg-4 text-right">
+                                <a href="{% url 'users:admin_product_add' %}" class="add-btn hover-btn">Ajouter Nouveau</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body-table">
+                        <div class="table-responsive">
+                            <table class="table ucp-table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Image</th>
+                                        <th>Nom</th>
+                                        <th>Categorie</th>
+                                        <th>Stock</th>
+                                        <th>Prix</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for product in products %}
+                                    <tr>
+                                        <td>{{ product.id }}</td>
+                                        <td>
+                                            {% if product.primary_image %}
+                                                <img src="{{ product.primary_image.image.url }}" alt="" style="width: 50px;">
+                                            {% else %}
+                                                <img src="https://via.placeholder.com/50" alt="No Image">
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ product.name }}</td>
+                                        <td>{{ product.category.name }}</td>
+                                        <td>{{ product.stock }}</td>
+                                        <td>{{ settings.currency }}{{ product.selling_price }}</td>
+                                        <td>
+                                            {% if product.is_active %}
+                                                <span class="badge badge-success">Active</span>
+                                            {% else %}
+                                                <span class="badge badge-danger">Inactive</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'users:admin_product_view' product.id %}" class="btn btn-sm btn-secondary">View</a>
+                                            <a href="{% url 'users:admin_product_edit' product.id %}" class="btn btn-sm btn-info">Edit</a>
+                                            <button type="button" class="btn btn-sm btn-danger delete-product" 
+                                                    data-id="{{ product.id }}" data-name="{{ product.name }}">
+                                                Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="8" class="text-center">Aucun Plat n'a été trouvé.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% include 'includes/pagination.html' with page_obj=products %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Plat</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>etes vous sure de vouloir delete <span id="productName"></span>?</p>
+            </div>
+            <div class="modal-footer">
+                <form id="deleteForm" method="POST">
+                    {% csrf_token %}
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle delete button clicks
+    document.querySelectorAll('.delete-product').forEach(button => {
+        button.addEventListener('click', function() {
+            const productId = this.dataset.id;
+            const productName = this.dataset.name;
+            
+            document.getElementById('productName').textContent = productName;
+            document.getElementById('deleteForm').action = `/users/admin/products/${productId}/delete/`;
+            
+            $('#deleteModal').modal('show');
+        });
+    });
+});
+</script>
+{% endblock %}

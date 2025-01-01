@@ -1,0 +1,116 @@
+{% extends 'users/admin/base.html' %}
+
+{% block content %}
+    <main>
+        <div class="container-fluid">
+            <h2 class="mt-30 page-title">Commande</h2>
+            <ol class="breadcrumb mb-30">
+                <li class="breadcrumb-item"><a href="{% url 'users:admin.index' %}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Commande</li>
+            </ol>
+            <div class="row justify-content-between">
+                <!-- Search and filter section -->
+                <div class="col-lg-12">
+                    <form method="get" class="mb-30">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6">
+                                <div class="search-by-name-input">
+                                    <input type="text" name="search" class="form-control" placeholder="Search by order ID, email or address" value="{{ search_query }}">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6">
+                                <div class="input-group">
+                                    <select name="status" class="form-control">
+                                        <option value="">Tous Les Status</option>
+                                        {% for value, label in status_choices %}
+                                            <option value="{{ value }}" {% if status_filter == value %}selected{% endif %}>{{ label }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="input-group-append">
+                                        <button class="status-btn hover-btn" type="submit">Rechercher Commande</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Orders table -->
+                <div class="col-lg-12">
+                    <div class="card card-static-2 mb-30">
+                        <div class="card-title-2">
+                            <h4>Toutes Les Commandes</h4>
+                        </div>
+                        <div class="card-body-table">
+                            <div class="table-responsive">
+                                <table class="table ucp-table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:130px">Commande ID</th>
+                                            <th>Customer</th>
+                                            <th style="width:200px">Date</th>
+                                            <th style="width:300px">Addresse</th>
+                                            <th style="width:130px">Status</th>
+                                            <th style="width:130px">Total</th>
+                                            <th style="width:100px">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in orders %}
+                                        <tr>
+                                            <td>{{ order.order_number }}</td>
+                                            <td>{{ order.user.email }}</td>
+                                            <td>
+                                                <span class="delivery-time">{{ order.created|date:"d/m/Y" }}</span>
+                                                <span class="delivery-time">{{ order.created|time:"H:i" }}</span>
+                                            </td>
+                                            <td>{{ order.address.street_address }}</td>
+                                            <td>
+                                                <span class="badge-item badge-status">{{ order.get_status_display }}</span>
+                                            </td>
+                                            <td>{{ order.grand_total|floatformat:2 }}</td>
+                                            <td class="action-btns">
+                                                <a href="{% url 'users:admin.order_detail' order.id %}" class="views-btn"><i class="fas fa-eye"></i></a>
+                                                <a href="{% url 'users:admin.order_edit' order.id %}" class="edit-btn"><i class="fas fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="7" class="text-center">Commande no trouvée</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Pagination -->
+                            {% if orders.has_other_pages %}
+                            <div class="pagination justify-content-center mt-4">
+                                <ul class="pagination">
+                                    {% if orders.has_previous %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ orders.previous_page_number }}&search={{ search_query }}&status={{ status_filter }}">&laquo;</a>
+                                        </li>
+                                    {% endif %}
+                                    
+                                    {% for i in orders.paginator.page_range %}
+                                        <li class="page-item {% if orders.number == i %}active{% endif %}">
+                                            <a class="page-link" href="?page={{ i }}&search={{ search_query }}&status={{ status_filter }}">{{ i }}</a>
+                                        </li>
+                                    {% endfor %}
+                                    
+                                    {% if orders.has_next %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="?page={{ orders.next_page_number }}&search={{ search_query }}&status={{ status_filter }}">&raquo;</a>
+                                        </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}

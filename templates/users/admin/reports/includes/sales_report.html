@@ -1,0 +1,32 @@
+<div class="card card-static-2 mb-30">
+    <div class="card-title-2">
+        <h4>Sales Report</h4>
+    </div>
+    <div class="card-body-table">
+        <div class="table-responsive">
+            <table class="table ucp-table table-hover">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Commandes</th>
+                        <th>Total Vente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sale in daily_sales %}
+                    <tr>
+                        <td>{{ sale.date|date:"Y-m-d" }}</td>
+                        <td>{{ sale.total_orders }}</td>
+                        <td>{{ settings.currency }}{{ sale.total_sales|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-body-table-footer">
+        <ul>
+            <li><button class="download-btn hover-btn" data-format="excel">Exporter à Excel</button></li>
+        </ul>
+    </div>
+</div> 

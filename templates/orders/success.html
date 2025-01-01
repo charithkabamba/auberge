@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="gambo-Breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Accueil</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Commande</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="all-product-grid">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8">
+                    <div class="order-success-content text-center">
+                        <i class="uil uil-check-circle text-success" style="font-size: 80px;"></i>
+                        <h2 class="mt-3">Votre Commande a été passée avec succès!</h2>
+                        <p class="mb-4">Votre Commande #{{ order.order_number }} a été passée avec succès.</p>
+                        
+                        <div class="order-details bg-light p-4 rounded mb-4">
+                            <h4 class="mb-3">Détails de la Commande</h4>
+                            <div class="row">
+                                <div class="col-6 text-left">
+                                    <p> Total Commande:</p>
+                                    <p>Charge de livraison:</p>
+                                    <p><strong>Total Général :</strong></p>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <p>{{ settings.currency }}{{ order.total_amount }}</p>
+                                    <p>{{ settings.currency }}{{ order.delivery_charge }}</p>
+                                    <p><strong>{{ settings.currency }}{{ order.grand_total }}</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="delivery-info bg-light p-4 rounded mb-4">
+                            <h4 class="mb-3">Information de livraison</h4>
+                            <p class="mb-1"><strong>{{ order.address.user.name }}</strong></p>
+                            <p class="mb-1">{{ order.address.address }}</p>
+                            <p class="mb-1">{{ order.address.city }}, {{ order.address.postal_code }}</p>
+                            <p>{{ order.address.phone }}</p>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <a href="{% url 'users:dashboard.orders' %}" class="btn btn-primary">View Order</a>
+                            <a href="{% url 'products:index' %}" class="btn btn-outline-primary ml-2">Continuez les Courses</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.order-success-content {
+    background: #fff;
+    padding: 40px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.text-success {
+    color: #28a745!important;
+}
+
+.order-details, .delivery-info {
+    text-align: left;
+}
+</style>
+{% endblock %} 

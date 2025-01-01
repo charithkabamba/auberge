@@ -1,0 +1,170 @@
+{% extends 'users/admin/base.html' %}
+{% load static %}
+
+{% block admin_title %}Product Detail - {{ product.name }}{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h2 class="mt-30 page-title">Plat Details</h2>
+        <ol class="breadcrumb mb-30">
+            <li class="breadcrumb-item"><a href="{% url 'users:admin.index' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:admin_products' %}">Plats</a></li>
+            <li class="breadcrumb-item active">{{ product.name }}</li>
+        </ol>
+        <div class="row">
+            <!-- Product Basic Info Card -->
+            <div class="col-lg-5 col-md-6">
+                <div class="card card-static-2 mb-30">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Information Basique</h5>
+                        <div>
+                            <a href="{% url 'products:detail' product.slug %}" class="btn btn-secondary btn-sm" target="_blank">View</a>
+                            <a href="{% url 'users:admin_product_edit' product.id %}" class="btn btn-primary btn-sm ml-2">Editer</a>
+                        </div>
+                    </div>
+                    <div class="card-body-table">
+                        <div class="shopowner-content-left pd-20">
+                            <div class="product_img mb-3 text-center">
+                                {% if product.primary_image %}
+                                    <img src="{{ product.primary_image.image.url }}" alt="{{ product.name }}" class="img-fluid">
+                                {% else %}
+                                    <img src="https://via.placeholder.com/300x300?text=No+Image" alt="No image" class="img-fluid">
+                                {% endif %}
+                            </div>
+                            <div class="shopowner-dts">
+                                <div class="shopowner-dt-list">
+                                    <span class="left-dt">Nom</span>
+                                    <span class="right-dt">{{ product.name }}</span>
+                                </div>
+                                <div class="shopowner-dt-list">
+                                    <span class="left-dt">Catégorie</span>
+                                    <span class="right-dt">{{ product.category.name }}</span>
+                                </div>
+                                <div class="shopowner-dt-list">
+                                    <span class="left-dt">Marque</span>
+                                    <span class="right-dt">{{ product.brand|default:"N/A" }}</span>
+                                </div>
+                                <div class="shopowner-dt-list">
+                                    <span class="left-dt">SKU</span>
+                                    <span class="right-dt">{{ product.sku }}</span>
+                                </div>
+                                <div class="shopowner-dt-list">
+                                    <span class="left-dt">Codebar</span>
+                                    <span class="right-dt">{{ product.barcode|default:"N/A" }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pricing and Stock Card -->
+            <div class="col-lg-7 col-md-6">
+                <div class="card card-static-2 mb-30">
+                    <div class="card-header">
+                        <h5>Prix & Inventaire</h5>
+                    </div>
+                    <div class="card-body-table">
+                        <div class="shopowner-content-left pd-20">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="shopowner-dts">
+                                        <div class="shopowner-dt-list">
+                                            <span class="left-dt">Prix Original</span>
+                                            <span class="right-dt">${{ product.original_price }}</span>
+                                        </div>
+                                        <div class="shopowner-dt-list">
+                                            <span class="left-dt">Price De Vente</span>
+                                            <span class="right-dt">${{ product.selling_price }}</span>
+                                        </div>
+                                        <div class="shopowner-dt-list">
+                                            <span class="left-dt">Stock</span>
+                                            <span class="right-dt">{{ product.stock }} {{ product.get_stock_unit_display }}</span>
+                                        </div>
+                                        <div class="shopowner-dt-list">
+                                            <span class="left-dt">Minimum Stock</span>
+                                            <span class="right-dt">{{ product.minimum_stock }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="shopowner-dts">
+                                        <div class="shopowner-dt-list">
+                                            <span class="left-dt">Status</span>
+                                            <span class="right-dt">
+                                                {% if product.is_active %}
+                                                    <span class="badge badge-success">Active</span>
+                                                {% else %}
+                                                    <span class="badge badge-danger">Inactive</span>
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                        <div class="shopowner-dt-list">
+                                            <span class="left-dt">Facturé</span>
+                                            <span class="right-dt">
+                                                {% if product.top_featured %}
+                                                    <span class="badge badge-primary">Yes</span>
+                                                {% else %}
+                                                    <span class="badge badge-secondary">No</span>
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                        <div class="shopowner-dt-list">
+                                            <span class="left-dt">Variant</span>
+                                            <span class="right-dt">{{ product.has_variants|yesno:"Yes,No" }}</span>
+                                        </div>
+                                        <div class="shopowner-dt-list">
+                                            <span class="left-dt">Shipping Gratuit</span>
+                                            <span class="right-dt">{{ product.is_free_shipping|yesno:"Yes,No" }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description Card -->
+                <div class="card card-static-2 mb-30">
+                    <div class="card-header">
+                        <h5>Description & Détails</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6>Déscription Général</h6>
+                        <p>{{ product.description|linebreaks }}</p>
+                        
+                        {% if product.additional_details %}
+                            <h6> Details Supplémentaires</h6>
+                            <p>{{ product.additional_details|linebreaks }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- SEO Information -->
+                <div class="card card-static-2 mb-30">
+                    <div class="card-header">
+                        <h5>SEO Information</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="shopowner-dts">
+                            <div class="shopowner-dt-list">
+                                <span class="left-dt">URL Slug</span>
+                                <span class="right-dt">{{ product.slug }}</span>
+                            </div>
+                            <div class="shopowner-dt-list">
+                                <span class="left-dt">Meta Keywords</span>
+                                <span class="right-dt">{{ product.meta_keywords|default:"N/A" }}</span>
+                            </div>
+                            <div class="shopowner-dt-list">
+                                <span class="left-dt">Meta Description</span>
+                                <span class="right-dt">{{ product.meta_description|default:"N/A" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

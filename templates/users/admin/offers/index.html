@@ -1,0 +1,85 @@
+{% extends 'users/admin/base.html' %}
+
+{% load static %}
+
+{% block admin_title %}Offers{% endblock %}
+{% block admin_subtitle %}Manage Offers{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h2 class="mt-30 page-title">Offres</h2>
+        <ol class="breadcrumb mb-30">
+            <li class="breadcrumb-item"><a href="{% url 'users:admin.index' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Offres</li>
+        </ol>
+        <div class="row justify-content-between">
+            <div class="col-lg-12">
+                <a href="{% url 'users:admin_offer_add' %}" class="add-btn hover-btn">Ajouter une nouvelle offre</a>
+            </div>
+            <div class="col-lg-12 col-md-12">
+                <div class="card card-static-2 mt-30 mb-30">
+                    <div class="card-title-2">
+                        <h4>Tous les Offres</h4>
+                    </div>
+                    <div class="card-body-table">
+                        <div class="table-responsive">
+                            <table class="table ucp-table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="width:60px">ID</th>
+                                        <th>Titre</th>
+                                        <th>Type</th>
+                                        <th>Réduction</th>
+                                        <th>Valide de</th>
+                                        <th>Valide Jusqu'au</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for offer in offers %}
+                                    <tr>
+                                        <td>{{ offer.id }}</td>
+                                        <td>{{ offer.title }}</td>
+                                        <td>{{ offer.get_offer_type_display }}</td>
+                                        <td>
+                                            {% if offer.offer_type == 'percentage' %}
+                                                {{ offer.discount_value }}%
+                                            {% elif offer.offer_type == 'fixed' %}
+                                                ${{ offer.discount_value }}
+                                            {% else %}
+                                                Buy {{ offer.buy_quantity }} Get {{ offer.get_quantity }}
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ offer.start_date|date:"M d, Y" }}</td>
+                                        <td>{{ offer.end_date|date:"M d, Y" }}</td>
+                                        <td>
+                                            <span class="badge-item badge-status">
+                                                {% if offer.is_active %}Active{% else %}Inactive{% endif %}
+                                            </span>
+                                        </td>
+                                        <td class="action-btns">
+                                            <a href="{% url 'users:admin_offer_edit' offer.id %}" class="edit-btn">
+                                                <i class="fas fa-edit"></i> Editer
+                                            </a>
+                                            <form method="POST" action="{% url 'users:admin_offer_delete' offer.id %}" 
+                                                  class="d-inline" onsubmit="return confirm('Are you sure you want to delete this offer?');">
+                                                {% csrf_token %}
+                                                <button type="submit" class="delete-btn">
+                                                    <i class="fas fa-trash-alt"></i> Delete
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

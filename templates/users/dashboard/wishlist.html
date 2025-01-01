@@ -1,0 +1,80 @@
+{% extends 'users/dashboard/base.html' %}
+
+{% block dashboard_title %}My Wishlist{% endblock %}
+{% block dashboard_subtitle %}Wishlist Items{% endblock %}
+
+{% block dashboard_content %}
+<div class="row">
+    {% if wishlist_items %}
+        {% for item in wishlist_items %}
+        <div class="col-lg-3 col-md-6 mb-4">
+            <div class="product-item">
+                <a href="{% url 'products:detail' item.product.slug %}" class="product-img">
+                    {% if item.product.primary_image %}
+                        <img src="{{ item.product.primary_image.image.url }}" alt="{{ item.product.name }}">
+                    {% endif %}
+                    <div class="product-absolute-options">
+                        {% if item.product.discount_percentage > 0 %}
+                            <span class="offer-badge-1">{{ item.product.discount_percentage }}% off</span>
+                        {% endif %}
+                        <span class="like-icon liked" title="Remove from wishlist" 
+                              data-product="{{ item.product.id }}"></span>
+                    </div>
+                </a>
+                <div class="product-text-dt">
+                    <p>
+                        {% if item.product.stock > 0 %}
+                            Disponibles<span>(En Stock)</span>
+                        {% else %}
+                            <span>(Encours de Stock)</span>
+                        {% endif %}
+                    </p>
+                    <h4>{{ item.product.name }}</h4>
+                    <div class="product-price">
+                        {{ settings.currency }}{{ item.product.selling_price }}
+                        {% if item.product.discount_percentage > 0 %}
+                            <span>{{ settings.currency }}{{ item.product.original_price }}</span>
+                        {% endif %}
+                    </div>
+                    {% if item.product.stock > 0 %}
+                    <button class="add-cart-btn hover-btn" data-product="{{ item.product.id }}">
+                        <i class="uil uil-shopping-cart-alt"></i> Ajouter au panier
+                    </button>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="empty-wishlist text-center py-5">
+                <i class="uil uil-heart" style="font-size: 50px;"></i>
+                <h3>votre liste de Préférence est vide</h3>
+                <p>Add items that you like to your wishlist</p>
+                <a href="{% url 'products:index' %}" class="btn btn-primary">Continue les Achats</a>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+{% block script %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Use frontend.js wishlist toggle function
+    document.querySelectorAll('.like-icon').forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            toggleWishlist(this, this.dataset.product);
+        });
+    });
+    
+    // Use frontend.js add to cart function
+    document.querySelectorAll('.add-cart-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            addToCart(this.dataset.product, 1);
+        });
+    });
+});
+</script>
+{% endblock %}
+{% endblock %} 

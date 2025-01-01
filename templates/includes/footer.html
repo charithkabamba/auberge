@@ -1,0 +1,120 @@
+{% load static %}
+
+<footer class="footer">
+    <div class="footer-first-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <ul class="call-email-alt">
+                        <li><a href="tel:+243 997011390" class="callemail"><i class="uil uil-dialpad-alt"></i>+243 997011390</a></li>
+                        <li><a href="mailto:auberge@saveur.com" class="callemail"><i class="uil uil-envelope-alt"></i>auberge@saveur.com</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <div class="social-links-footer">
+                        <ul>
+                            <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-second-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="second-row-item">
+                        <h4>Categories</h4>
+                        <ul>
+                            <li><a href="{% url 'products:index' %}">All Products</a></li>
+                            <li><a href="{% url 'products:featured' %}">Featured Products</a></li>
+                            {% for category in categories %}
+                                <li><a href="{% url 'products:category' category.slug %}">{{ category.name }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="second-row-item">
+                        <h4>Useful Links</h4>
+                        <ul>
+                            <li><a href="{% url 'core:about' %}">A propos</a></li>
+                            <li><a href="{% url 'core:contact' %}">Contact</a></li>
+                            <li><a href="{% url 'core:terms' %}">Conditions d'utilisation</a></li>
+                            <li><a href="{% url 'core:privacy' %}">Privacy Policy</a></li>
+                            <li><a href="{% url 'core:faq' %}">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="second-row-item">
+                        <h4>Account</h4>
+                        <ul>
+                            {% if user.is_authenticated %}
+                                <li><a href="{% url 'users:dashboard.profile' %}">Profile</a></li>
+                                <li><a href="{% url 'users:dashboard.orders' %}">My Orders</a></li>
+                                <li><a href="{% url 'users:dashboard.wishlist' %}">My Wishlist</a></li>
+                                <li><a href="{% url 'users:dashboard.addresses' %}">My Addresses</a></li>
+                                <li>
+                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Déconnexion
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li><a href="{% url 'users:login' %}">Connexion</a></li>
+                                <li><a href="{% url 'users:signup' %}">Création Compte</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-6">
+                    <div class="second-row-item-app">
+                        <h4>Télécharger</h4>
+                        <ul>
+                            <li>
+                                <a href="#"><img src="{% static 'frontend/images/download-1.svg' %}" alt="" style="width: 50%; height: auto;"></a>
+                            </li>
+                            <li>
+                                <a href="#"><img src="{% static 'frontend/images/download-2.svg' %}" alt="" style="width: 50%; height: auto;"></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="second-row-item-payment">
+                        <h4>Méthode de paiement</h4>
+                        <div class="footer-payments">
+                            <ul id="paypal-gateway" class="financial-institutes">
+                                <li class="financial-institutes__logo">
+                                    <img src="{% static 'frontend/images/payment-methods.png' %}" alt="Payment Methods">
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-last-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="footer-bottom-links">
+                        <ul>
+                            <li><a href="{% url 'core:about' %}">A propos</a></li>
+                            <li><a href="{% url 'core:contact' %}">Contact</a></li>
+                            <li><a href="{% url 'core:privacy' %}">Privacy Policy</a></li>
+                            <li><a href="{% url 'core:terms' %}">Terms & Conditions</a></li>
+                            <li><a href="{% url 'core:refund' %}">Refund</a></li>
+                        </ul>
+                    </div>
+                    <div class="copyright-text">
+                        <i class="uil uil-copyright"></i>Copyright {% now 'Y' %} <b>auberge</b>. tous Droit réservés
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

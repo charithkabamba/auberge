@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block title %}Terms & Conditions{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="gambo-Breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Accueil</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Terms & Conditions</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="all-product-grid">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="terms-content-wrapper">
+                        <h2>Terms & Conditions</h2>
+                        <p class="last-updated">Last updated: {{ settings.privacy_last_updated|date:"F d, Y" }}</p>
+
+                        <section class="terms-section">
+                            <h3>1. Acceptation des Conditions</h3>
+                            <p>En accédant et en utilisant {{ settings.site_name }}, vous acceptez d'être lié par ces Conditions Générales. Si vous n'acceptez pas ces conditions, veuillez ne pas utiliser nos services.</p>
+                        </section>
+
+                        <section class="terms-section">
+                            <h3>2. Utilisation de Nos Services</h3>
+                            <p>En utilisant nos services, vous acceptez de : </p>
+                            <ul>
+                                <li>Fournir des informations exactes et complètes</li>
+                            <li>Maintenir la sécurité de votre compte</li>
+                            <li>Ne pas utiliser le service à des fins illégales</li>
+                            <li>Ne pas interférer avec le bon fonctionnement du service</li>
+                            <li>Accepter la responsabilité de toutes les activités sous votre compte</li>
+                            </ul>
+                        </section>
+
+                        <section class="terms-section">
+                            <h3>3. Commandes et Paiements</h3>
+                            <p>En passant une commande, vous acceptez que :</p>
+                            <ul>
+                                <li>Toutes les informations de commande fournies sont exactes et complètes</li>
+                                <li>Vous paierez tous les frais aux prix en vigueur au moment de la commande</li>
+                                <li>Vous paierez en utilisant un mode de paiement autorisé</li>
+                                <li>Nous nous réservons le droit de refuser ou d'annuler toute commande</li>
+                                <li>Les prix et la disponibilité sont susceptibles de changer sans préavis</li>
+                            </ul>
+                        </section>
+
+                        <section class="terms-section">
+                            <h3>4. Expédition et Livraison</h3>
+                            <p>Nos conditions de livraison incluent :</p>
+                            <ul>
+                                <li>Les délais de livraison sont des estimations et ne sont pas garantis</li>
+                            <li>Le risque de perte vous incombe lors de la livraison</li>
+                            <li>Vous devez inspecter les produits à la livraison</li>
+                            <li>Des frais supplémentaires peuvent s'appliquer pour certains lieux</li>
+                            <li>Nous ne sommes pas responsables des retards échappant à notre contrôle</li>
+                            </ul>
+                        </section>
+
+                        <section class="terms-section">
+                            <h3>5. Retours et Remboursements</h3>
+                            <p>Notre politique de retour stipule :</p>
+                            <ul>
+                                <li>Les retours doivent être initiés dans les 7 jours suivant la livraison</li>
+                            <li>Les produits doivent être non utilisés et dans leur emballage d'origine</li>
+                            <li>Les frais d'expédition pour les retours sont à la charge du client</li>
+                            <li>Les remboursements seront traités dans un délai de 14 jours ouvrables</li>
+                            <li>Certaines articles ne sont pas éligibles au retour</li>
+                            </ul>
+                        </section>
+
+                        <section class="terms-section">
+                            <h3>6. Propriété Intellectuelle</h3>
+                            <p>Tous les contenus de ce site sont protégés par :</p>
+                        <ul>
+                            <li>Les lois sur le droit d'auteur</li>
+                            <li>Les droits des marques déposées</li>
+                            <li>D'autres droits de propriété</li>
+                            <li>Vous ne pouvez pas copier ou utiliser notre contenu sans autorisation</li>
+                        </ul>
+                        </section>
+
+                        <section class="terms-section">
+                            <h3>7. Limitation de Responsabilité</h3>
+                        <p>Nous ne serons pas responsables pour :</p>
+                        <ul>
+                            <li>Dommages indirects ou consécutifs</li>
+                            <li>Pertes de profits ou interruption d'activité</li>
+                            <li>Pertes ou corruption de données</li>
+                            <li>Pannes techniques ou violations de sécurité</li>
+                        </ul>
+                        </section>
+
+                        <section class="terms-section">
+                            <h3>8. Informations de Contact</h3>
+                        <p>Pour toute question concernant ces Conditions Générales, veuillez nous contacter à :</p>
+                            <div class="contact-info">
+                                <p>Email: {{ settings.contact_email }}</p>
+                                <p>Phone: {{ settings.contact_phone }}</p>
+                                <p>Address: {{ settings.address }}</p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.terms-content-wrapper {
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.terms-content-wrapper h2 {
+    color: #2b2f4c;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.last-updated {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+.terms-section {
+    margin-bottom: 30px;
+}
+
+.terms-section h3 {
+    color: #2b2f4c;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.terms-section p {
+    color: #3e3f5e;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.terms-section ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.terms-section ul li {
+    color: #3e3f5e;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.contact-info {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.contact-info p {
+    margin-bottom: 10px;
+}
+</style>
+{% endblock %} 

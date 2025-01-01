@@ -1,0 +1,125 @@
+{% extends 'users/admin/base.html' %}
+
+{% block content %}
+    <main>
+        <div class="container-fluid">
+            <h2 class="mt-30 page-title">Dashboard</h2>
+            <ol class="breadcrumb mb-30">
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+            <div class="row">
+                <div class="col-xl-3 col-md-6">
+                    <div class="dashboard-report-card purple">
+                        <div class="card-content">
+                            <span class="card-title">Commande En Cours</span>
+                            <span class="card-count">{{ pending_orders }}</span>
+                        </div>
+                        <div class="card-media">
+                            <i class="fab fa-rev"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="dashboard-report-card red">
+                        <div class="card-content">
+                            <span class="card-title">Commande Annulée</span>
+                            <span class="card-count">{{ cancelled_orders }}</span>
+                        </div>
+                        <div class="card-media">
+                            <i class="far fa-times-circle"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="dashboard-report-card info">
+                        <div class="card-content">
+                            <span class="card-title">Commande Traitées</span>
+                            <span class="card-count">{{ processing_orders }}</span>
+                        </div>
+                        <div class="card-media">
+                            <i class="fas fa-sync-alt rpt_icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6">
+                    <div class="dashboard-report-card success">
+                        <div class="card-content">
+                            <span class="card-title">Commande du Jour</span>
+                            <span class="card-count">${{ today_income|floatformat:2 }}</span>
+                        </div>
+                        <div class="card-media">
+                            <i class="fas fa-money-bill rpt_icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-md-12">
+                    <div class="card card-static-1 mb-30">
+                        <div class="card-body">
+                            <div id="earningGraph"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-12 col-md-12">
+                    <div class="card card-static-2 mb-30">
+                        <div class="card-title-2">
+                            <h4>Recent Orders</h4>
+                            <a href="{% url 'users:admin.orders' %}" class="view-btn hover-btn">View All</a> 
+                        </div>
+                        <div class="card-body-table">
+                            <div class="table-responsive">
+                                <table class="table ucp-table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th style="width:130px">Order ID</th>
+                                            <th>Item</th>
+                                            <th style="width:200px">Date</th>
+                                            <th style="width:300px">Addresse</th>
+                                            <th style="width:130px">Status</th>
+                                            <th style="width:130px">Total</th>
+                                            <th style="width:100px">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for order in recent_orders %}
+                                        <tr>
+                                            <td>{{ order.order_number }}</td>
+                                            <td>
+                                                <a href="" target="_blank">
+                                                    {% for item in order.items.all %}
+                                                        {{ item.product.title }}{% if not forloop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <span class="delivery-time">{{ order.created|date:"d/m/Y" }}</span>
+                                                <span class="delivery-time">{{ order.delivery_time }}</span>
+                                            </td>
+                                            <td>{{ order.address.full_address }}</td>
+                                            <td>
+                                                <span class="badge-item badge-status">{{ order.status }}</span>
+                                            </td>
+                                            <td>${{ order.total_amount|floatformat:2 }}</td>
+                                            <td class="action-btns">
+                                                <a href="" class="views-btn"><i class="fas fa-eye"></i></a>
+                                                <a href="" class="edit-btn"><i class="fas fa-edit"></i></a>
+                                            </td>
+                                        </tr>
+                                        {% empty %}
+                                        <tr>
+                                            <td colspan="7" class="text-center">Aucune Commande récente</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script>
+        const monthNames = {{ month_names|safe }};
+        const monthlyRevenue = {{ monthly_revenue|safe }};
+    </script>
+{% endblock %}

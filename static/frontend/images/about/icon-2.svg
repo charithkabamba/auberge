@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background Gradient -->
+    <defs>
+        <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#ffc599;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#ffe8dc;stop-opacity:0" />
+        </linearGradient>
+    </defs>
+    
+    <!-- Background Shape -->
+    <path d="M50 100 Q150 50 250 100 Q400 150 450 300 Q500 450 350 450 Q200 450 100 400 Q0 350 50 100" 
+          fill="url(#grad2)"/>
+    
+    <!-- Chart Elements -->
+    <g transform="translate(100,100)">
+        <!-- Grid Lines -->
+        <path d="M50 50 H300 M50 150 H300 M50 250 H300" 
+              stroke="#e9ecef" stroke-width="2" fill="none"/>
+        
+        <!-- Growth Line -->
+        <path d="M50 250 Q150 200 200 150 T300 50" 
+              stroke="#ff6c6c" stroke-width="8" fill="none" 
+              stroke-linecap="round"/>
+        
+        <!-- Multiplier -->
+        <g transform="translate(175,150)">
+            <circle cx="0" cy="0" r="40" fill="#ff9d33"/>
+            <text x="0" y="0" 
+                  font-family="Arial" font-size="36" 
+                  fill="white" text-anchor="middle" 
+                  dominant-baseline="middle">2×</text>
+        </g>
+    </g>
+</svg>

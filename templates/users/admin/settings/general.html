@@ -1,0 +1,64 @@
+{% extends 'users/admin/base.html' %}
+
+{% block admin_title %}General Settings{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h2 class="mt-30 page-title">Général Paramettres</h2>
+        <ol class="breadcrumb mb-30">
+            <li class="breadcrumb-item"><a href="{% url 'users:admin.index' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Paramettres Général </li>
+        </ol>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card card-static-2 mb-30">
+                    <div class="card-title-2">
+                        <h4>Paramettres Site </h4>
+                    </div>
+                    <div class="card-body-table ml-3 mr-3">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label class="form-label">Site Nom*</label>
+                                <input type="text" class="form-control" name="site_name" value="{{ settings.site_name }}" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Site Logo</label>
+                                {% if settings.site_logo %}
+                                    <div class="current-image mb-2">
+                                        <img src="{{ settings.site_logo.url }}" alt="Current Logo" style="max-height: 100px;">
+                                    </div>
+                                {% endif %}
+                                <input type="file" class="form-control-file" name="site_logo" accept="image/*">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Favicon</label>
+                                {% if settings.favicon %}
+                                    <div class="current-image mb-2">
+                                        <img src="{{ settings.favicon.url }}" alt="Current Favicon" style="max-height: 32px;">
+                                    </div>
+                                {% endif %}
+                                <input type="file" class="form-control-file" name="favicon" accept="image/*">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Contact Email</label>
+                                <input type="email" class="form-control" name="contact_email" value="{{ settings.contact_email|default:'' }}">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Contact Phone</label>
+                                <input type="text" class="form-control" name="contact_phone" value="{{ settings.contact_phone|default:'' }}">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Addresse</label>
+                                <textarea class="form-control" name="address" rows="3">{{ settings.address|default:'' }}</textarea>
+                            </div>
+                            <button class="save-btn hover-btn" type="submit">Savegarder</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %} 

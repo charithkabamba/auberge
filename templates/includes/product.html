@@ -1,0 +1,44 @@
+<div class="product-item">
+    <div class="product-card">
+        <a href="{% url 'products:detail' product.slug %}" class="product-img">
+            {% if product.primary_image %}
+                <img src="{{ product.primary_image.image.url }}" alt="{{ product.name }}">
+            {% else %}
+                <img src="https://placehold.co/400x400?text=No+Image" alt="{{ product.name }}">
+            {% endif %}
+            {% if product.discount_percentage > 0 %}
+                <div class="discount-badge">-{{ product.discount_percentage }}%</div>
+            {% endif %}
+        </a>
+        
+        <div class="product-content">
+            <div class="stock-status {% if product.stock <= 0 %}out-of-stock{% endif %}">
+                {% if product.stock <= 0 %}
+                    <i class="uil uil-times-circle"></i> En cours de Stock
+                {% else %}
+                    <i class="uil uil-check-circle"></i> Stock disponible
+                {% endif %}
+            </div>
+            
+            <h4 class="product-title">{{ product.name }}</h4>
+            
+            <div class="product-price">
+                <div class="current-price">{{ settings.currency }}{{ product.selling_price }}</div>
+                {% if product.discount_percentage > 0 %}
+                    <div class="original-price">{{ settings.currency }}{{ product.original_price }}</div>
+                {% endif %}
+            </div>
+
+            <div class="product-actions">
+                <button type="button" class="add-to-cart-btn" data-product="{{ product.id }}">
+                    <i class="uil uil-shopping-cart-alt"></i>
+                    Ajouter au panier
+                </button>
+                <button type="button" class="wishlist-btn {% if product.is_wishlisted %}active{% endif %}" 
+                        title="Add to Wishlist" data-product="{{ product.id }}">
+                    <i class="uil uil-heart"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

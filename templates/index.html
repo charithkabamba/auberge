@@ -1,0 +1,277 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- carousel -->
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'frontend/auberge/carou3.jpeg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'frontend/auberge/carou2.jpeg' %}" class="d-block w-100" alt="...">
+      </div>
+      <div class="carousel-item">
+        <img src="{% static 'frontend/auberge/carou1.jpeg' %}" class="d-block w-100" alt="...">
+      </div>
+    </div>
+  </div>
+
+<!-- fin carousel -->
+    <div id="category_model" class="header-cate-model main-gambo-model modal fade" tabindex="-1" role="dialog" aria-modal="false">
+        <div class="modal-dialog category-area" role="document">
+            <div class="category-area-inner">
+                <div class="modal-header">
+                    <button type="button" class="close btn-close" data-dismiss="modal" aria-label="Close">
+                        <i class="uil uil-multiply"></i>
+                    </button>
+                </div>
+                <div class="category-model-content modal-content"> 
+                    <div class="cate-header">
+                        <h4>Choisissez une Catégorie</h4>
+                    </div>
+                    <ul class="category-by-cat">
+                        {% for category in categories %}
+                            <li>
+                                <a href="{% url 'products:category' category.slug %}" class="single-cat-item">
+                                    <div class="icon">
+                                        <img src="{{ category.image.url }}" alt="">
+                                    </div>
+                                    <div class="text"> {{ category.name }} </div>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                    <a href="#" class="morecate-btn"><i class="uil uil-apps"></i>Plus de Categories</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper">
+        <!-- Categories Start -->
+        <div class="section145">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="main-title-tt">
+                            <div class="main-title-left">
+                                <span> Achat par </span>
+                                <h2>Catégories</h2>
+                            </div>
+                        </div>
+                    </div>
+                    {% if categories.count > 0 %}
+                        <div class="col-md-12">
+                            <div class="owl-carousel cate-slider owl-theme">
+                                {% for category in categories %}
+                                    <div class="item">
+                                        <a href="{% url 'products:category' category.slug %}" class="category-item">
+                                            <div class="cate-img">
+                                                <img src="{{ category.image.url }}" alt="">
+                                            </div>
+                                            <h4> {{ category.name }} </h4>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col-lg-12 col-md-12">
+                            <div class="how-order-steps">
+                                <div class="how-order-icon">
+                                    <i class="uil uil-apps"></i>
+                                </div>
+                                <h4>Catégorie Non Disponible </h4>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- Categories End -->
+
+        <!-- New Products Start -->
+        <div class="section145">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="main-title-tt">
+                            <div class="main-title-left">
+                                <span>Pour Toi</span>
+                                <h2>Ajouté un nouveau plat</h2>
+                            </div>
+                            <a href="{% url 'products:index' %}" class="see-more-btn">Voir tous</a>
+                        </div>
+                    </div>
+                    {% if products.count > 0 %}
+                        <div class="col-md-12">
+                            <div class="owl-carousel featured-slider owl-theme">
+                                {% for product in products %}
+                                    <div class="item">
+                                        {% include 'includes/product.html' with product=product %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col-lg-12 col-md-12">
+                            <div class="how-order-steps">
+                                <div class="how-order-icon">
+                                    <i class="uil uil-shopping-basket"></i>
+                                </div>
+                                <h4> Plat non Disponible </h4>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- New Products End -->
+    </div>
+{% endblock %}
+
+{% block style %}
+    <style>
+        .product-item {
+            margin-bottom: 25px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-img {
+            position: relative;
+            display: block;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+        
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .product-img:hover img {
+            transform: scale(1.05);
+        }
+        
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: #ff4a4a;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .product-content {
+            padding: 15px;
+        }
+        
+        .stock-status {
+            font-size: 13px;
+            color: #2ecc71;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+        
+        .stock-status.out-of-stock {
+            color: #e74c3c;
+        }
+        
+        .product-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2b2f4c;
+            margin-bottom: 10px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .current-price {
+            font-size: 18px;
+            font-weight: 700;
+            color: #2b2f4c;
+        }
+        
+        .original-price {
+            font-size: 14px;
+            color: #999;
+            text-decoration: line-through;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .add-to-cart-btn {
+            flex: 1;
+            background: #2b2f4c;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .add-to-cart-btn:hover {
+            background: #1f2238;
+        }
+        
+        .wishlist-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #e0e0e0;
+            background: white;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .wishlist-btn:hover {
+            background: #f8f8f8;
+            border-color: #2b2f4c;
+            color: #2b2f4c;
+        }
+
+        .wishlist-btn.active {
+            background: #f69733;
+            color: white;
+        }
+    </style>
+{% endblock %}

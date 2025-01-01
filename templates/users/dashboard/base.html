@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="gambo-Breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Accueil</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{% block dashboard_title %}Dashboard{% endblock %}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-group">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="user-dt">
+                        <div class="user-img">
+                            <img src="{{ user.avatar.url|default:'https://via.placeholder.com/150' }}" alt="">
+                            <div class="img-add">
+                                <input type="file" id="file">
+                                <label for="file"><i class="uil uil-camera-plus"></i></label>
+                            </div>
+                        </div>
+                        <h4>{{ user.name }}</h4>
+                        <p><i class="uil uil-phone"></i> {{ user.phone }} <span><i class="uil uil-envelope"></i> <a href="mailto:{{ user.email }}">{{ user.email }}</a></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if messages %}
+        <div class="container mt-3">
+            <div class="row">
+                <div class="col-lg-12">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.extra_tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+    <div class="dashboard-group-2 mt-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="left-side-tabs">
+                        <div class="dashboard-left-links">
+                            <a href="{% url 'users:dashboard.index' %}" class="user-item {% if request.resolver_match.url_name == 'dashboard.index' %}active{% endif %}">
+                                <i class="uil uil-apps"></i>Dashboard
+                            </a>
+                            <a href="{% url 'users:dashboard.profile' %}" class="user-item {% if request.resolver_match.url_name == 'dashboard.profile' %}active{% endif %}">
+                                <i class="uil uil-user"></i>Mon Profile
+                            </a>
+                            <a href="{% url 'users:dashboard.orders' %}" class="user-item {% if request.resolver_match.url_name == 'dashboard.orders' %}active{% endif %}">
+                                <i class="uil uil-box"></i>Mes Commandes
+                            </a>
+                            <a href="{% url 'users:dashboard.wishlist' %}" class="user-item {% if request.resolver_match.url_name == 'dashboard.wishlist' %}active{% endif %}">
+                                <i class="uil uil-heart"></i>Liste de Souhaits
+                            </a>
+                            <a href="{% url 'users:dashboard.addresses' %}" class="user-item {% if request.resolver_match.url_name == 'dashboard.addresses' %}active{% endif %}">
+                                <i class="uil uil-location-point"></i>Mes Addresses
+                            </a>
+                            <a href="#" class="user-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                <i class="uil uil-sign-out-alt"></i>Déconnexion
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-9">
+                    <div class="dashboard-right">
+                        {% block dashboard_content %}{% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

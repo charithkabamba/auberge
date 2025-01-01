@@ -1,0 +1,288 @@
+[
+  {
+    "model": "products.productimage",
+    "pk": 1,
+    "fields": {
+      "created": "2024-03-20T10:00:00Z",
+      "modified": "2024-03-20T10:00:00Z", 
+      "product": 1,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage", 
+    "pk": 2,
+    "fields": {
+      "created": "2024-03-20T10:00:00Z",
+      "modified": "2024-03-20T10:00:00Z",
+      "product": 1,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": false
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 3,
+    "fields": {
+      "created": "2024-03-20T10:30:00Z",
+      "modified": "2024-03-20T10:30:00Z",
+      "product": 2,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 4,
+    "fields": {
+      "created": "2024-03-20T11:00:00Z",
+      "modified": "2024-03-20T11:00:00Z",
+      "product": 3,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 5,
+    "fields": {
+      "created": "2024-03-20T11:30:00Z", 
+      "modified": "2024-03-20T11:30:00Z",
+      "product": 4,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 6,
+    "fields": {
+      "created": "2024-03-20T12:00:00Z",
+      "modified": "2024-03-20T12:00:00Z",
+      "product": 5,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg", 
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 7,
+    "fields": {
+      "created": "2024-03-20T12:30:00Z",
+      "modified": "2024-03-20T12:30:00Z",
+      "product": 6,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 8,
+    "fields": {
+      "created": "2024-03-20T13:00:00Z",
+      "modified": "2024-03-20T13:00:00Z",
+      "product": 7,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 9,
+    "fields": {
+      "created": "2024-03-20T13:30:00Z",
+      "modified": "2024-03-20T13:30:00Z",
+      "product": 8,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 10,
+    "fields": {
+      "created": "2024-03-20T14:00:00Z",
+      "modified": "2024-03-20T14:00:00Z",
+      "product": 9,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 11,
+    "fields": {
+      "created": "2024-03-20T14:30:00Z",
+      "modified": "2024-03-20T14:30:00Z",
+      "product": 10,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 12,
+    "fields": {
+      "created": "2024-03-20T15:00:00Z",
+      "modified": "2024-03-20T15:00:00Z",
+      "product": 11,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 13,
+    "fields": {
+      "created": "2024-03-20T15:30:00Z",
+      "modified": "2024-03-20T15:30:00Z",
+      "product": 12,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 14,
+    "fields": {
+      "created": "2024-03-20T16:00:00Z",
+      "modified": "2024-03-20T16:00:00Z",
+      "product": 13,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 15,
+    "fields": {
+      "created": "2024-03-20T16:30:00Z",
+      "modified": "2024-03-20T16:30:00Z",
+      "product": 14,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 16,
+    "fields": {
+      "created": "2024-03-20T17:00:00Z",
+      "modified": "2024-03-20T17:00:00Z",
+      "product": 15,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 17,
+    "fields": {
+      "created": "2024-03-20T17:30:00Z",
+      "modified": "2024-03-20T17:30:00Z",
+      "product": 16,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 18,
+    "fields": {
+      "created": "2024-03-20T18:00:00Z",
+      "modified": "2024-03-20T18:00:00Z",
+      "product": 17,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 19,
+    "fields": {
+      "created": "2024-03-20T18:30:00Z",
+      "modified": "2024-03-20T18:30:00Z",
+      "product": 18,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 20,
+    "fields": {
+      "created": "2024-03-20T19:00:00Z",
+      "modified": "2024-03-20T19:00:00Z",
+      "product": 19,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 21,
+    "fields": {
+      "created": "2024-03-20T19:30:00Z",
+      "modified": "2024-03-20T19:30:00Z",
+      "product": 20,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 22,
+    "fields": {
+      "created": "2024-03-20T20:00:00Z",
+      "modified": "2024-03-20T20:00:00Z",
+      "product": 21,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 23,
+    "fields": {
+      "created": "2024-03-20T20:30:00Z",
+      "modified": "2024-03-20T20:30:00Z",
+      "product": 22,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 24,
+    "fields": {
+      "created": "2024-03-20T21:00:00Z",
+      "modified": "2024-03-20T21:00:00Z",
+      "product": 23,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 25,
+    "fields": {
+      "created": "2024-03-20T21:30:00Z",
+      "modified": "2024-03-20T21:30:00Z",
+      "product": 24,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  },
+  {
+    "model": "products.productimage",
+    "pk": 26,
+    "fields": {
+      "created": "2024-03-20T22:00:00Z",
+      "modified": "2024-03-20T22:00:00Z",
+      "product": 25,
+      "image": "products/2024/12/08/kjYDQC7XMK62415Qm9hgYzR5VQqzq4.jpg",
+      "is_primary": true
+    }
+  }
+]

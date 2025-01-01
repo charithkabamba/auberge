@@ -1,0 +1,168 @@
+{% extends 'users/dashboard/base.html' %}
+
+{% block dashboard_title %}My Orders{% endblock %}
+{% block dashboard_subtitle %}Order History{% endblock %}
+
+{% block style %}
+
+<style>
+    .badge-pending {
+        background-color: #ffc107;
+        color: #000;
+    }
+    .badge-processing {
+        background-color: #17a2b8;
+        color: #fff;
+    }
+    .badge-shipped {
+        background-color: #007bff;
+        color: #fff;
+    }
+    .badge-delivered {
+        background-color: #28a745;
+        color: #fff;
+    }
+    .badge-cancelled {
+        background-color: #dc3545;
+        color: #fff;
+    }
+    .order-product-img img {
+        border-radius: 5px;
+    }
+    </style>
+
+{% endblock %}
+
+{% block dashboard_content %}
+<div class="orders-list">
+    {% if orders %}
+        {% for order in orders %}
+        <div class="order-item mb-4">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0">Order #{{ order.order_number }}</h5>
+                        <small class="text-muted">Placed on {{ order.created|date:"M d, Y" }}</small>
+                    </div>
+                    <span class="badge badge-{{ order.status }}">{{ order.get_status_display }}</span>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <!-- Order Items -->
+                            {% for item in order.items.all %}
+                            <div class="order-product-item d-flex align-items-center mb-3">
+                                <div class="order-product-img">
+                                    {% if item.product.primary_image %}
+                                        <img src="{{ item.product.primary_image.image.url }}" alt="{{ item.product.name }}" 
+                                             style="width: 80px; height: 80px; object-fit: cover;">
+                                    {% endif %}
+                                </div>
+                                <div class="order-product-dt ml-3">
+                                    <h6 class="mb-1">{{ item.product.name }}</h6>
+                                    <p class="mb-0">Quantity: {{ item.quantity }}</p>
+                                    <p class="mb-0">Price: {{ settings.currency }}{{ item.price }}</p>
+                                    <p class="mb-0">Sous total: {{ settings.currency }}{{ item.subtotal }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-4">
+                            <!-- Order Summary -->
+                            <div class="order-summary bg-light p-3 rounded">
+                                <h6 class="mb-3">Résumé Commande</h6>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>Items Total:</span>
+                                    <span>{{ settings.currency }}{{ order.total_amount }}</span>
+                                </div>
+                                <div class="d-flex justify-content-between mb-2">
+                                    <span>
+                                        Changer la livraison:</span>
+                                    <span>{{ settings.currency }}{{ order.delivery_charge }}</span>
+                                </div>
+                                <hr>
+                                <div class="d-flex justify-content-between font-weight-bold">
+                                    <span>Total:</span>
+                                    <span>{{ settings.currency }}{{ order.grand_total }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Delivery Address -->
+                            <div class="delivery-info bg-light p-3 rounded mt-3">
+                                <h6 class="mb-2">Addresse de Livraison</h6>
+                                <p class="mb-1"><strong>{{ order.address.user.name }}</strong></p>
+                                <p class="mb-1">{{ order.address.address }}</p>
+                                <p class="mb-1">{{ order.address.city }}, {{ order.address.postal_code }}</p>
+                                <p class="mb-0">{{ order.address.phone }}</p>
+                            </div>
+
+                            <!-- Order Actions -->
+                            {% if order.status == 'pending' %}
+                            <div class="order-actions mt-3">
+                                <button class="btn btn-danger btn-sm cancel-order" data-id="{{ order.id }}">
+                                    Annulé la commande
+                                </button>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="empty-orders text-center py-5">
+            <i class="uil uil-box" style="font-size: 50px;"></i>
+            <h3></h3>Aucune Commande
+            <p>il parait que vous n'avez pas encore passer une commande.</p>
+            <a href="{% url 'products:index' %}" class="btn btn-primary">passer la commande</a>
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block script %}
+<script>
+document.querySelectorAll('.cancel-order').forEach(button => {
+    button.addEventListener('click', function() {
+        const orderId = this.dataset.id;
+        
+        Swal.fire({
+            title: 'Cancel Order?',
+            text: "Are you sure you want to cancel this order?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#dc3545',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, cancel it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Send cancel request
+                fetch(`/orders/api/${orderId}/cancel/`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': getCookie('csrftoken')
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        Swal.fire('Error!', data.error, 'error');
+                    } else {
+                        Swal.fire('Cancelled!', 'Your order has been cancelled.', 'success')
+                        .then(() => {
+                            window.location.reload();
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    Swal.fire('Error!', 'Something went wrong.', 'error');
+                });
+            }
+        });
+    });
+});
+</script>
+{% endblock %} 

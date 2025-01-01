@@ -1,0 +1,35 @@
+{% extends 'users/dashboard/base.html' %}
+
+{% block dashboard_title %}My Profile{% endblock %}
+{% block dashboard_subtitle %}Profile Settings{% endblock %}
+
+{% block dashboard_content %}
+<div class="checkout-step-body">
+    <form id="profileForm" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group">
+                    <label class="control-label">Nom Complet*</label>
+                    <input type="text" name="name" class="form-control" value="{{ user.name }}" required>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label">Email*</label>
+                    <input type="email" name="email" class="form-control" value="{{ user.email }}" required>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="form-group">
+                    <label class="control-label">Phone*</label>
+                    <input type="text" name="phone" class="form-control" value="{{ user.phone }}" required>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <button type="submit" class="btn btn-primary">Sauvegarder</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %} 

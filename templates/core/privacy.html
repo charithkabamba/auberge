@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block title %}Privacy Policy{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="gambo-Breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Accueil</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Tous Droit Réservé</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="all-product-grid">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="privacy-content-wrapper">
+                        <h2>Privacy Policy</h2>
+                        <p class="last-updated">Dernière mise à jour: {{ settings.privacy_last_updated|date:"F d, Y" }}</p>
+
+                        <section class="privacy-section">
+                            <h3>1. Nous collectons les Informations</h3>
+                            <p>Nous Collectons Les Informations Que vous Nous Fournissez Comme :</p>
+                            <ul>
+                                <li>Nom et Votre Numéro De Contact</li>
+                                <li>Addresse De livraison </li>
+                                <li>Les Informations De Paiement</li>
+                                <li>historique De Commandes</li>
+                                <li>Preferences Clients</li>
+                            </ul>
+                        </section>
+
+                        <section class="privacy-section">
+                            <h3>2. Comment utilisons nous vos Information</h3>
+                            <p>Nous utilisons les information que nous collectons à :</p>
+                            <ul>
+                                <li>Pour traiter votre commande</li>
+                                <li>Communiquer avec vous concernant nos services</li>
+                                <li>Vous envoyez un message de marketing (avec votre consentement)</li>
+                                <li>Improve our services and user experience</li>
+                            </ul>
+                        </section>
+
+                        <section class="privacy-section">
+                            <h3>3. Partage d'information</h3>
+                            <p>Nous partageons vos informations seulement dans le cas ci-après :</p>
+                            <ul>
+                                <li>Processus de paiement</li>
+                                <li>à nos partenaires de livraisons</li>
+                            </ul>
+                        </section>
+
+                        <section class="privacy-section">
+                            <h3>4. Securité de données</h3>
+                            <p>votre sécurité de données est prioritaire, en incluant :</p>
+                            <ul>
+                                <li>Encrytation de données sensibles</li>
+                                <li>Sécuriser le processus de paiement</li>
+                                <li>nous avons une limite d'accès aux données</li>
+                            </ul>
+                        </section>
+
+                        <section class="privacy-section">
+                            <h3>5. Vos Droits</h3>
+                            <p>Vous avez Droit :</p>
+                            <ul>
+                                <li>Acceder à vos informations personelles</li>
+                                <li>Modification des données</li>
+                                <li>Suppression de vos informations</li>
+                            </ul>
+                        </section>
+
+                        <section class="privacy-section">
+                            <h3>6. Trace des données</h3>
+                            <p>We use cookies and similar technologies to:</p>
+                            <ul>
+                                <li>Rappel des préférences</li>
+                                <li>Maintain your shopping cart</li>
+                                <li>Analyser l'expérience utilisateur</li>
+                                <li>Personnaliser  l'experience utilisateurs</li>
+                            </ul>
+                        </section>
+
+                        <section class="privacy-section">
+                            <h3>7. Contact</h3>
+                            <p>Si vous avez une préoccupations, vous pouvez nous contqcter aux addresses suivantes :</p>
+                            <div class="contact-info">
+                                <p>Email: {{ settings.contact_email }}</p>
+                                <p>Phone: {{ settings.contact_phone }}</p>
+                                <p>Address: {{ settings.address }}</p>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.privacy-content-wrapper {
+    padding: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.privacy-content-wrapper h2 {
+    color: #2b2f4c;
+    margin-bottom: 20px;
+    font-size: 28px;
+}
+
+.last-updated {
+    color: #666;
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+.privacy-section {
+    margin-bottom: 30px;
+}
+
+.privacy-section h3 {
+    color: #2b2f4c;
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+.privacy-section p {
+    color: #3e3f5e;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.privacy-section ul {
+    list-style-type: disc;
+    margin-left: 20px;
+    margin-bottom: 15px;
+}
+
+.privacy-section ul li {
+    color: #3e3f5e;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.contact-info {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.contact-info p {
+    margin-bottom: 10px;
+}
+</style>
+{% endblock %} 

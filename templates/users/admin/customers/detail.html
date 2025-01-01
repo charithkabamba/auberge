@@ -1,0 +1,84 @@
+{% extends 'users/admin/base.html' %}
+
+{% block admin_title %}Customer Details{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h2 class="mt-30 page-title">Details Clients</h2>
+        <ol class="breadcrumb mb-30">
+            <li class="breadcrumb-item"><a href="{% url 'users:admin.index' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:admin.customers' %}">Customers</a></li>
+            <li class="breadcrumb-item active">{{ customer.name }}</li>
+        </ol>
+        <div class="row">
+            <div class="col-xl-12 col-md-12">
+                <div class="card card-static-2 mb-30">
+                    <div class="card-title-2">
+                        <h2>Information Client</h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="customer-info">
+                                    <h5>Information Basiques</h5>
+                                    <p><strong>Name:</strong> {{ customer.name }}</p>
+                                    <p><strong>Email:</strong> {{ customer.email }}</p>
+                                    <p><strong>Phone:</strong> {{ customer.phone|default:"Not provided" }}</p>
+                                    <p><strong>Join:</strong> {{ customer.date_joined|date:"d M Y" }}</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="customer-stats">
+                                    <h5>Statistiques Client</h5>
+                                    <p><strong>Total Commande:</strong> {{ customer.order_count }}</p>
+                                    <p><strong>Total :</strong> {{ settings.currency }}{{ customer.total_spent|default:"0.00" }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card card-static-2 mb-30">
+                    <div class="card-title-2">
+                        <h2>Historique de Commandes</h2>
+                    </div>
+                    <div class="card-body-table">
+                        <div class="table-responsive">
+                            <table class="table ucp-table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Commande ID</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Total</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                    <tr>
+                                        <td>#{{ order.order_number }}</td>
+                                        <td>{{ order.created|date:"d M Y" }}</td>
+                                        <td>{{ order.status|title }}</td>
+                                        <td>{{ settings.currency }}{{ order.grand_total }}</td>
+                                        <td>
+                                            <a href="{% url 'users:admin.order_detail' order.id %}" 
+                                               class="btn btn-sm btn-secondary">Voir Commande</a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="5" class="text-center">Aucune Commande trouvée.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %} 

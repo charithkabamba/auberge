@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    All Categories
+{% endblock %}
+
+{% block content %}
+
+    <!-- Body Start -->
+    <div class="wrapper">
+        <div class="gambo-Breadcrumb">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href=""> Accueil </a></li>
+                                <li class="breadcrumb-item active" aria-current="page"> Catégories</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="all-product-grid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="product-top-dt">
+                            <div class="product-left-title">
+                                <h2 class="cat_name"> toutes Les Catégories </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-list-view">
+                    <div class="row category-by-cat">
+                        {% for category in categories %}
+                            <div class="col-lg-3 col-md-6">
+                                <a href=""
+                                   class="single-cat-item bg-white mb-4">
+                                    <div class="icon">
+                                        <img src="{{ category.image.url }}" alt="">
+                                    </div>
+                                    <div class="text"> {{ category.name }} </div>
+                                </a>
+                            </div>
+                        {% empty %}
+                            <div class="col-lg-12 col-md-12">
+                                <div class="how-order-steps">
+                                    <div class="how-order-icon">
+                                        <i class="uil uil-shopping-basket"></i>
+                                    </div>
+                                    <h4> Categories Non Disponibles </h4>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Body End -->
+
+{% endblock %}

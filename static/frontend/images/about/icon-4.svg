@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background Gradient -->
+    <defs>
+        <linearGradient id="grad4" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#ffc599;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#ffe8dc;stop-opacity:0" />
+        </linearGradient>
+    </defs>
+    
+    <!-- Background Shape -->
+    <path d="M50 100 Q150 0 300 50 Q450 100 450 250 Q450 400 300 450 Q150 500 50 400 Q-50 300 50 100" 
+          fill="url(#grad4)"/>
+    
+    <!-- Phone Device -->
+    <g transform="translate(156,106)">
+        <rect x="0" y="0" width="200" height="300" rx="20" fill="#ff6c6c"/>
+        <rect x="20" y="20" width="160" height="240" rx="10" fill="#ffffff"/>
+        
+        <!-- Download Arrow -->
+        <g transform="translate(100,140)">
+            <path d="M0 -40 L0 40 M-20 0 L0 40 L20 0" 
+                  stroke="#ff9d33" stroke-width="12" 
+                  fill="none" stroke-linecap="round"/>
+        </g>
+        
+        <!-- Home Button -->
+        <circle cx="100" cy="280" r="15" fill="#ffffff"/>
+    </g>
+    
+    <!-- Download Count -->
+    <g transform="translate(350,250)">
+        <circle cx="0" cy="0" r="60" fill="#6c6cff"/>
+        <text x="0" y="-10" 
+              font-family="Arial" font-size="24" 
+              fill="white" text-anchor="middle">95k</text>
+        <text x="0" y="20" 
+              font-family="Arial" font-size="16" 
+              fill="white" text-anchor="middle">Downloads</text>
+    </g>
+</svg>

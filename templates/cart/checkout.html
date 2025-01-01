@@ -1,0 +1,457 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="gambo-Breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Accueil</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Voir Les Details</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="all-product-grid">
+        <div class="container">
+            {% if cart and cart_items %}
+            <div class="row">
+                <div class="col-lg-8 col-md-7">
+                    <div id="checkout_wizard" class="checkout accordion left-chck145">
+                        <!-- Shipping Address Section -->
+                        <div class="checkout-step">
+                            <div class="checkout-card" id="headingOne">
+                                <span class="checkout-step-number">1</span>
+                                <h4 class="checkout-step-title">
+                                    <button class="wizard-btn" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne"> 
+                                        Addresse d'Embarquement
+                                    </button>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#checkout_wizard">
+                                <div class="checkout-step-body">
+                                    <div class="address-fieldset">
+                                        {% if addresses %}
+                                            <div class="saved-addresses mb-4">
+                                                <h5>Saved Addresses</h5>
+                                                {% for address in addresses %}
+                                                <div class="address-item mb-3">
+                                                    <div class="custom-control custom-radio">
+                                                        <input type="radio" id="address{{ address.id }}" 
+                                                               name="shipping_address" 
+                                                               class="custom-control-input"
+                                                               value="{{ address.id }}"
+                                                               {% if address.is_default %}checked{% endif %}>
+                                                        <label class="custom-control-label" for="address{{ address.id }}">
+                                                            <strong>{{ address.user.name }}</strong><br>
+                                                            {{ address.phone }}<br>
+                                                            {{ address.address }}<br>
+                                                            {{ address.city }}, {{ address.postal_code }}
+                                                            {% if address.is_default %}
+                                                                <span class="badge badge-primary ml-2">Default</span>
+                                                            {% endif %}
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            </div>
+                                            <button type="button" class="btn btn-outline-primary mb-4" 
+                                                    data-toggle="collapse" 
+                                                    data-target="#newAddressForm">
+                                                Ajouter Addresse
+                                            </button>
+                                        {% endif %}
+                                        
+                                        <div id="newAddressForm" class="collapse {% if not addresses %}show{% endif %}">
+                                            <form id="addressForm">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Numéro de téléphone*</label>
+                                                            <input type="text" name="phone" class="form-control" 
+                                                                   placeholder="Phone Number" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Addresse*</label>
+                                                            <textarea name="address" class="form-control" 
+                                                                      placeholder="Address" required></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">City*</label>
+                                                            <input type="text" name="city" class="form-control" 
+                                                                   placeholder="City" required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-group">
+                                                            <label class="control-label">Postal Code*</label>
+                                                            <input type="text" name="postal_code" class="form-control" 
+                                                                   placeholder="Postal Code" >
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <div class="form-group">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" name="is_default" 
+                                                                       class="custom-control-input" id="makeDefault">
+                                                                <label class="custom-control-label" for="makeDefault">
+                                                                    Mon addresse par défaut
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-12">
+                                                        <button type="submit" class="btn btn-primary">Enregistrer Addresse</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Method Section -->
+                        <div class="checkout-step">
+                            <div class="checkout-card" id="headingTwo">
+                                <span class="checkout-step-number">2</span>
+                                <h4 class="checkout-step-title">
+                                    <button class="wizard-btn collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                       Méthode de Payement
+                                    </button>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#checkout_wizard">
+                                <div class="checkout-step-body">
+                                    <div class="payment-method-selection">
+                                        <div class="custom-control custom-radio mb-3">
+                                            <input type="radio" id="cashOnDelivery" name="payment_method" 
+                                                   value="cash_on_delivery" class="custom-control-input" checked>
+                                            <label class="custom-control-label" for="cashOnDelivery">Payer à la livraison</label>
+                                        </div>
+                                        <div class="custom-control custom-radio mb-3">
+                                            <input type="radio" id="stripePayment" name="payment_method" 
+                                                   value="stripe" class="custom-control-input">
+                                            <label class="custom-control-label" for="stripePayment">Carte de Crédit (Stripe)</label>
+                                        </div>
+                                        
+                                        <!-- Stripe Card Element -->
+                                        <div id="stripe-payment-form" style="display: none;" class="mt-3">
+                                            <div class="form-group">
+                                                <label>Details de Carte
+                                                </label>
+                                                <div id="card-element" class="form-control">
+                                                    <!-- Stripe Card Element will be inserted here -->
+                                                </div>
+                                                <div id="card-errors" class="text-danger mt-2"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Order Summary -->
+                <div class="col-lg-4 col-md-5">
+                    <div class="pdpt-bg mt-0">
+                        <div class="pdpt-title">
+                            <h4>Commande Résumée</h4>
+                        </div>
+                        <div class="right-cart-dt-body">
+                            {% for item in cart_items %}
+                            <div class="cart-item border_radius">
+                                <div class="cart-product-img">
+                                    {% if item.product.primary_image %}
+                                        <img src="{{ item.product.primary_image.image.url }}" alt="{{ item.product.name }}">
+                                    {% endif %}
+                                </div>
+                                <div class="cart-text">
+                                    <h4>{{ item.product.name }}</h4>
+                                    <div class="cart-item-price">
+                                        {{ settings.currency }}{{ item.product.selling_price }} x {{ item.quantity }}
+                                        <span>{{ settings.currency }}{{ item.subtotal }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="total-checkout-group">
+                            <div class="cart-total-dil">
+                                <h4>Sous-Total</h4>
+                                <span>{{ settings.currency }}{{ cart.total_price }}</span>
+                            </div>
+                            <div class="cart-total-dil pt-3">
+                                <h4>Charges de livraison</h4>
+                                <span>{{ settings.currency }}50</span>
+                            </div>
+                        </div>
+                        <div class="main-total-cart">
+                            <h2>Total</h2>
+                            <span>{{ settings.currency }}{{ cart.total_price|add:"50" }}</span>
+                        </div>
+                        <div class="payment-secure">
+                            <button class="next-btn16 hover-btn" type="button" id="placeOrderBtn">Passer La Commande</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="row justify-content-center">
+                <div class="col-lg-6 col-md-8">
+                    <div class="empty-cart text-center">
+                        <i class="uil uil-shopping-cart-alt" style="font-size: 50px;"></i>
+                        <h3>vous n'avez pas de Commandes</h3>
+                        <p>il parait que vous n'avez pas encore choisi un plat.</p>
+                        <a href="{% url 'products:index' %}" class="btn btn-primary">Composer la commande</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const addressForm = document.getElementById('addressForm');
+    if (addressForm) {
+        addressForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                phone: this.querySelector('[name="phone"]').value,
+                address: this.querySelector('[name="address"]').value,
+                city: this.querySelector('[name="city"]').value,
+                postal_code: this.querySelector('[name="postal_code"]').value,
+                is_default: this.querySelector('[name="is_default"]').checked
+            };
+            
+            fetch('/users/api/address/add/', {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: data.error,
+                        customClass: {
+                            container: 'swal-container-class',
+                            popup: 'swal-popup-class'
+                        }
+                    });
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success',
+                        text: 'Address saved successfully',
+                        timer: 1500,
+                        customClass: {
+                            container: 'swal-container-class',
+                            popup: 'swal-popup-class'
+                        }
+                    }).then(() => {
+                        window.location.reload();
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Something went wrong!',
+                    customClass: {
+                        container: 'swal-container-class',
+                        popup: 'swal-popup-class'
+                    }
+                });
+            });
+        });
+    }
+});
+</script>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+const stripe = Stripe('{{ stripe_publishable_key }}');
+const elements = stripe.elements();
+const card = elements.create('card');
+
+// Mount the card element
+card.mount('#card-element');
+
+// Handle real-time validation errors
+card.addEventListener('change', function(event) {
+    const displayError = document.getElementById('card-errors');
+    if (event.error) {
+        displayError.textContent = event.error.message;
+    } else {
+        displayError.textContent = '';
+    }
+});
+
+// Show/hide Stripe form based on payment method selection
+document.querySelectorAll('input[name="payment_method"]').forEach(input => {
+    input.addEventListener('change', function() {
+        const stripeForm = document.getElementById('stripe-payment-form');
+        stripeForm.style.display = this.value === 'stripe' ? 'block' : 'none';
+    });
+});
+
+// Handle form submission
+document.getElementById('placeOrderBtn').addEventListener('click', async function(e) {
+    e.preventDefault();
+
+    const selectedAddress = document.querySelector('input[name="shipping_address"]:checked');
+    if (!selectedAddress) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Please select a delivery address'
+        });
+        return;
+    }
+
+    const paymentMethod = document.querySelector('input[name="payment_method"]:checked').value;
+    
+    if (paymentMethod === 'stripe') {
+        // Create payment method
+        const {paymentMethod, error} = await stripe.createPaymentMethod({
+            type: 'card',
+            card: card,
+        });
+
+        if (error) {
+            const errorElement = document.getElementById('card-errors');
+            errorElement.textContent = error.message;
+            return;
+        }
+
+        // Send to server
+        const response = await fetch('{% url "cart:create_payment_intent" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify({
+                payment_method_id: paymentMethod.id,
+                shipping_address: selectedAddress.value
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.requires_action) {
+            // Handle 3D Secure authentication
+            const { error } = await stripe.handleCardAction(data.client_secret);
+            
+            if (error) {
+                const errorElement = document.getElementById('card-errors');
+                errorElement.textContent = error.message;
+            } else {
+                // Confirm payment after 3D Secure
+                confirmPayment(data.payment_intent_id);
+            }
+        } else if (data.success) {
+            window.location.href = data.redirect_url;
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: data.error
+            });
+        }
+    } else {
+        // Handle cash on delivery
+        const formData = {
+            shipping_address: selectedAddress.value,
+            payment_method: 'cash_on_delivery'
+        };
+
+        fetch('{% url "cart:place_order" %}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.error
+                });
+            } else {
+                window.location.href = data.redirect_url;
+            }
+        });
+    }
+});
+
+async function confirmPayment(paymentIntentId) {
+    const response = await fetch('{% url "cart:confirm_payment" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: JSON.stringify({
+            payment_intent_id: paymentIntentId
+        })
+    });
+
+    const data = await response.json();
+    
+    if (data.success) {
+        window.location.href = data.redirect_url;
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: data.error
+        });
+    }
+}
+</script>
+<script>
+document.getElementById('same_as_shipping').addEventListener('change', function() {
+    const billingSection = document.getElementById('billing_address_section');
+    billingSection.style.display = this.checked ? 'none' : 'block';
+    
+    // Clear billing address selection when using shipping address
+    if (this.checked) {
+        document.querySelector('select[name="billing_address"]').value = '';
+    }
+});
+</script>
+{% endblock %} 

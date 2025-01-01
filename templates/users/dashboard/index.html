@@ -1,0 +1,219 @@
+{% extends 'users/dashboard/base.html' %}
+
+{% block dashboard_title %}Dashboard{% endblock %}
+{% block dashboard_subtitle %}Overview{% endblock %}
+
+{% block dashboard_content %}
+<div class="dashboard-info-group">
+    <div class="row mt-3">
+        <!-- Order Stats -->
+        <div class="col-lg-4 col-md-6">
+            <div class="dashboard-widget">
+                <div class="dash-widget-header">
+                    <div class="dash-widget-icon">
+                        <i class="uil uil-box"></i>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h6>Total Orders</h6>
+                        <h3>{{ total_orders }}</h3>
+                    </div>
+                </div>
+                <div class="dash-widget-footer">
+                    <span class="text-muted">
+                        <i class="uil uil-clock"></i> Dernière Commande {{ last_order_date|timesince }} Depuis
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wishlist Stats -->
+        <div class="col-lg-4 col-md-6">
+            <div class="dashboard-widget">
+                <div class="dash-widget-header">
+                    <div class="dash-widget-icon text-danger">
+                        <i class="uil uil-heart"></i>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h6>Liste de Souhaits</h6>
+                        <h3>{{ wishlist_count }}</h3>
+                    </div>
+                </div>
+                <div class="dash-widget-footer">
+                    <a href="{% url 'users:dashboard.wishlist' %}" class="text-muted">Voir Ma Liste de Souhaits <i class="uil uil-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Address Stats -->
+        <div class="col-lg-4 col-md-6">
+            <div class="dashboard-widget">
+                <div class="dash-widget-header">
+                    <div class="dash-widget-icon text-success">
+                        <i class="uil uil-location-point"></i>
+                    </div>
+                    <div class="dash-widget-info">
+                        <h6>Savegarder Addresses</h6>
+                        <h3>{{ address_count }}</h3>
+                    </div>
+                </div>
+                <div class="dash-widget-footer">
+                    <a href="{% url 'users:dashboard.addresses' %}" class="text-muted">Gestion Addresses <i class="uil uil-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Orders -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="main-title-tab">
+                <h4>Cpmmande Récentes</h4>
+                <a href="{% url 'users:dashboard.orders' %}" class="view-more">View All</a>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12">
+            {% if recent_orders %}
+            <div class="table-responsive">
+                <table class="table ucp-table">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Items</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in recent_orders %}
+                        <tr>
+                            <td>#{{ order.order_number }}</td>
+                            <td>{{ order.created|date:"M d, Y" }}</td>
+                            <td>{{ order.items.count }} items</td>
+                            <td>{{ settings.currency }}{{ order.total_amount }}</td>
+                            <td>
+                                <span class="badge badge-{{ order.status }}">
+                                    {{ order.get_status_display }}
+                                </span>
+                            </td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-secondary">
+                                    <i class="uil uil-eye"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="empty-orders text-center">
+                <i class="uil uil-box" style="font-size: 50px;"></i>
+                <h3>Aucune Commande </h3>
+                <p>Commandez et vous verez les Commandes ici</p>
+                <a href="{% url 'products:index' %}" class="btn btn-primary">Shop Now</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+.dashboard-widget {
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+.dash-widget-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.dash-widget-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #f55d2c;
+    color: #fff;
+    font-size: 24px;
+    margin-right: 15px;
+}
+
+.dash-widget-icon.text-danger {
+    background: #dc3545;
+}
+
+.dash-widget-icon.text-success {
+    background: #28a745;
+}
+
+.dash-widget-info h6 {
+    margin: 0;
+    color: #2b2f4c;
+    font-size: 14px;
+}
+
+.dash-widget-info h3 {
+    margin: 5px 0 0;
+    color: #2b2f4c;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.dash-widget-footer {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.view-more {
+    float: right;
+    font-size: 14px;
+    color: #f55d2c;
+}
+
+.ucp-table {
+    margin-bottom: 0;
+}
+
+.ucp-table thead th {
+    border-top: 0;
+    font-weight: 500;
+    font-size: 14px;
+    color: #2b2f4c;
+}
+
+.badge-pending {
+    background: #ffc107;
+    color: #000;
+}
+
+.badge-processing {
+    background: #17a2b8;
+    color: #fff;
+}
+
+.badge-shipped {
+    background: #007bff;
+    color: #fff;
+}
+
+.badge-delivered {
+    background: #28a745;
+    color: #fff;
+}
+
+.badge-cancelled {
+    background: #dc3545;
+    color: #fff;
+}
+</style>
+{% endblock %}

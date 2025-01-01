@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    <style>
+        .product-price span {
+            color: #c7c7c7;
+            text-decoration: line-through;
+            margin-left: 10px;
+            font-weight: 600;
+        }
+        .no-products {
+            text-align: center;
+            padding: 50px 0;
+        }
+        .no-products h3 {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        .no-products p {
+            color: #999;
+        }
+
+        .add-to-cart-btn {
+            margin-left: 10px;
+            flex: 1;
+            background: #2b2f4c;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .add-to-cart-btn:hover {
+            background: #1f2238;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="all-product-grid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="product-top-dt">
+                            <div class="product-left-title">
+                                <h2>{{ title }}</h2>
+                            </div>
+                            <a href="#" class="filter-btn">Filtres</a>
+                            <div class="product-sort">
+                                <div class="ui selection dropdown vchrt-dropdown">
+                                    <input name="sort" type="hidden" value="{{ sort }}">
+                                    <i class="dropdown icon d-icon"></i>
+                                    <div class="text">
+                                        {% if sort == 'price_asc' %}
+                                            Price - Low to High
+                                        {% elif sort == 'price_desc' %}
+                                            Price - High to Low
+                                        {% elif sort == 'name' %}
+                                            Alphabetical
+                                        {% else %}
+                                            Popularity
+                                        {% endif %}
+                                    </div>
+                                    <div class="menu">
+                                        <div class="item {% if sort == 'default' %}active selected{% endif %}" data-value="default">Popularité</div>
+                                        <div class="item {% if sort == 'price_asc' %}active selected{% endif %}" data-value="price_asc">Prix faible au prix fort</div>
+                                        <div class="item {% if sort == 'price_desc' %}active selected{% endif %}" data-value="price_desc">Price - Fort à Faible</div>
+                                        <div class="item {% if sort == 'name' %}active selected{% endif %}" data-value="name">Lettre Alphabetique</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="product-list-view">
+                    <div class="row">
+                        {% if products %}
+                            {% for product in products %}
+                            <div class="col-lg-3 col-md-6">
+                                <div class="product-item mb-30">
+                                    <a href="{% url 'products:detail' product.slug %}" class="product-img">
+                                        {% if product.primary_image %}
+                                            <img src="{{ product.primary_image.image.url }}" alt="{{ product.name }}">
+                                        {% else %}
+                                            <img src="https://via.placeholder.com/300x300?text=No+Image" alt="{{ product.name }}">
+                                        {% endif %}
+                                        <div class="product-absolute-options">
+                                            {% if product.discount_percentage > 0 %}
+                                                <span class="offer-badge-1">{{ product.discount_percentage }}% off</span>
+                                            {% endif %}
+                                            <span class="like-icon wishlist-btn {% if product.is_wishlisted %}liked{% endif %}" title="wishlist" data-product="{{ product.id }}"></span>
+                                        </div>
+                                    </a>
+                                    <div class="product-text-dt">
+                                        <p>
+                                            {% if product.stock > 0 %}
+                                                Disponible<span>(En Stock)</span>
+                                            {% else %}
+                                                <span>(Encours de Stock)</span>
+                                            {% endif %}
+                                        </p>
+                                        <h4>{{ product.name }}</h4>
+                                        <div class="product-price">{{ settings.currency }}{{ product.selling_price }} {% if product.original_price > product.selling_price %}<span>{{ settings.currency }}{{ product.original_price }}</span>{% endif %}</div>
+                                        <div class="qty-cart">
+                                            <div class="quantity buttons_added">
+                                                <input type="button" value="-" class="minus minus-btn">
+                                                <input type="number" step="1" name="quantity" value="1" class="input-text qty text">
+                                                <input type="button" value="+" class="plus plus-btn">
+                                            </div>
+                                            <button type="button" class="add-to-cart-btn" data-product="{{ product.id }}">
+                                                <i class="uil uil-shopping-cart-alt"></i>
+                                                Ajouter au Panier
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            
+                            {% if products.has_other_pages %}
+                                <div class="col-md-12">
+                                    <div class="more-product-btn">
+                                        {% if products.has_next %}
+                                            <a href="?page={{ products.next_page_number }}" class="show-more-btn hover-btn">Voir Plus...</a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            <div class="col-12">
+                                <div class="no-products">
+                                    <h3>Aucun Plat disponible</h3>
+                                    <p>Désolé, nous ne disposons pas un plat rélatif à ta recherche.</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

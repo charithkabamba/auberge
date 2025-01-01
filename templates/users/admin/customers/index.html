@@ -1,0 +1,77 @@
+{% extends 'users/admin/base.html' %}
+
+{% block admin_title %}Customers{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h2 class="mt-30 page-title">Client</h2>
+        <ol class="breadcrumb mb-30">
+            <li class="breadcrumb-item"><a href="{% url 'users:admin.index' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Clents</li>
+        </ol>
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card card-static-2 mb-30">
+                    <div class="card-title-2">
+                        <h4>All Customers</h4>
+                        <div class="search-form">
+                            <form action="" method="GET">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="search" 
+                                           placeholder="Search customers..." value="{{ search_query }}">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-secondary" type="submit">
+                                            <i class="fas fa-search"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body-table">
+                        <div class="table-responsive">
+                            <table class="table ucp-table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Nom</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Commande</th>
+                                        <th>Total </th>
+                                        <th>Join</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for customer in customers %}
+                                    <tr>
+                                        <td>{{ customer.id }}</td>
+                                        <td>{{ customer.name }}</td>
+                                        <td>{{ customer.email }}</td>
+                                        <td>{{ customer.phone|default:"-" }}</td>
+                                        <td>{{ customer.order_count }}</td>
+                                        <td>{{ settings.currency }}{{ customer.total_spent|default:"0.00" }}</td>
+                                        <td>{{ customer.date_joined|date:"d M Y" }}</td>
+                                        <td>
+                                            <a href="{% url 'users:admin.customer_detail' customer.id %}" 
+                                               class="btn btn-sm btn-secondary">Voir les Details</a>
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="8" class="text-center">Aucun Client n'a été Trouvé.</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        {% include 'includes/pagination.html' with page_obj=customers %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %} 

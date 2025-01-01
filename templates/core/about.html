@@ -1,0 +1,182 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="default-dt">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="title129">	
+                        <h2>Apropos d'auberge</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="life-gambo">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="default-title left-text">
+                        <h2>Apropos d'Hooberge</h2>
+                        <p>votre parteneur de confiance</p>
+                    </div>
+                    <div class="about-content">
+                        <p>Auberge est un restaurant qui se distingue par son offre variée de services de restauration, allant de la cuisine traditionnelle à des options modernes et pratiques. Notre mission est de créer une expérience culinaire unique qui répond aux besoins diversifiés de notre clientèle, tout en mettant l'accent sur la qualité des ingrédients et le service client.</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-img">
+                        <img src="{% static 'frontend/images/about.svg' %}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="about-steps-group white-bg">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="about-step">
+                        <div class="about-step-img">
+                            <img src="{% static 'frontend/images/about/icon-1.svg' %}" alt="">
+                        </div>
+                        <h4>40+</h4>
+                        <p>les nouveaux membres de l'équipe</p>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="about-step">
+                        <div class="about-step-img">
+                            <img src="{% static 'frontend/images/about/icon-2.svg' %}" alt="">
+                        </div>
+                        <h4>2x</h4>
+                        <p>Auberge de mille saveurs</p>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="about-step">
+                        <div class="about-step-img">
+                            <img src="{% static 'frontend/images/about/icon-3.svg' %}" alt="">
+                        </div>
+                        <h4>10 jours</h4>
+                        <p>nous couvrons l'espace Kowezi avec nos services</p>
+                    </div>
+                </div>
+                <div class="col-lg-3">
+                    <div class="about-step">
+                        <div class="about-step-img">
+                            <img src="{% static 'frontend/images/about/icon-4.svg' %}" alt="">
+                        </div>
+                        <h4>95k</h4>
+                        <p>les nombres de clients satisfaits qui utilisent notre application mobile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="how-order-gambo">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="default-title">
+                        <h2>Comment Passer Une Commande?</h2>
+                        <p>Comment passer Ma commande</p>
+                        <img src="{% static 'frontend/auberge/about/icon-4.svg' %}" alt="">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="how-order-steps">
+                        <div class="how-order-icon">
+                            <i class="uil uil-search"></i>
+                        </div>
+                        <h4>tapez auberge.vercel.app.com pour nos différents produits et services </h4>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="how-order-steps">
+                        <div class="how-order-icon">
+                            <i class="uil uil-shopping-basket"></i>
+                        </div>
+                        <h4>Ajoutez le produit à votre pannier</h4>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="how-order-steps">
+                        <div class="how-order-icon">
+                            <i class="uil uil-stopwatch"></i>
+                        </div>
+                        <h4>Choisissez un temps de livraison pendant la journée*</h4>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="how-order-steps">
+                        <div class="how-order-icon">
+                            <i class="uil uil-money-bill"></i>
+                        </div>
+                        <h4>Selectionnez un mode de paiement(Cash, M-Pesa, airtel Money, Orange Money)</h4>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="how-order-steps">
+                        <div class="how-order-icon">
+                            <i class="uil uil-truck"></i>
+                        </div>
+                        <h4>votre produit vous sera livré au lieu et heure prévu.</h4>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="how-order-steps">
+                        <div class="how-order-icon">
+                            <i class="uil uil-smile"></i>
+                        </div>
+                        <h4>Client Satisfait</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- equipe -->
+
+<div class="container">
+    <h1 class="text-center my-4">Notre Équipe</h1>
+    
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{% static 'frontend/auberge/logo.jpeg' %}" class="card-img-top" alt="Membre de l'équipe 1">
+                <div class="card-body">
+                    <h5 class="card-title">Nom Membre 1</h5>
+                    <p class="card-text">Rôle Membre 1</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{% static 'frontend/auberge/logo.jpeg' %}" class="card-img-top" alt="Membre de l'équipe 2">
+                <div class="card-body">
+                    <h5 class="card-title">Nom Membre 2</h5>
+                    <p class="card-text">Rôle Membre 2</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <img src="{% static 'frontend/auberge/logo.jpeg' %}" class="card-img-top" alt="Membre de l'équipe 3">
+                <div class="card-body">
+                    <h5 class="card-title">Nom Membre 3</h5>
+                    <p class="card-text">Rôle Membre 3</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %} 

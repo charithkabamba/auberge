@@ -1,0 +1,146 @@
+{% extends 'users/admin/base.html' %}
+
+{% block admin_title %}Edit Order #{{ order.id }}{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h2 class="mt-30 page-title">Commande</h2>
+        <ol class="breadcrumb mb-30">
+            <li class="breadcrumb-item"><a href="{% url 'users:admin.index' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:admin.orders' %}">Orders</a></li>
+            <li class="breadcrumb-item active">Commande #{{ order.order_number }}</li>
+        </ol>
+        <div class="row">
+            <div class="col-xl-12 col-md-12">
+                <div class="card card-static-2 mb-30">
+                    <div class="card-title-2">
+                        <h2 class="title1458">Invoice</h2>
+                        <span class="order-id">Commande #{{ order.order_number }}</span>
+                        <a href="{% url 'users:admin.orders.pdf' order.id %}" class="btn btn-primary float-right ml-2">
+                            <i class="uil uil-download-alt"></i> Téléchqrger PDF
+                        </a>
+                    </div>
+                    <div class="invoice-content">
+                        <div class="row">
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="ordr-date">
+                                    <b>Date Commande:</b> {{ order.created|date:"d M Y" }}
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="ordr-date">
+                                    <b>Client:</b><br>
+                                    Nom: {{ order.user.name }}<br>
+                                    Email: {{ order.user.email }}
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="order-payment-dt">
+                                    <div class="order-payment-left-text">
+                                        <b>Méthodode de Paiement:</b> {{ order.readable_payment_method|title }}
+                                    </div>
+                                    <div class="order-payment-left-text">
+                                        <b>Status De Paiement:</b> {{ order.payment_status|title }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-sm-6">
+                                <div class="ordr-date right-text">
+                                    <b>Addresse De Livraison :</b><br>
+                                    {{ order.shipping_address|linebreaksbr }}
+                                </div>
+                            </div>
+                            <div class="col-lg-12">
+                                <div class="card card-static-2 mb-30 mt-30">
+                                    <div class="card-title-2">
+                                        <h4>Commande Items</h4>
+                                    </div>
+                                    <div class="card-body-table">
+                                        <div class="table-responsive">
+                                            <table class="table ucp-table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th style="width:130px">#</th>
+                                                        <th>Item</th>
+                                                        <th style="width:150px" class="text-center">Prix</th>
+                                                        <th style="width:150px" class="text-center">Qté</th>
+                                                        <th style="width:100px" class="text-center">Total</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for item in order.items.all %}
+                                                    <tr>
+                                                        <td>{{ forloop.counter }}</td>
+                                                        <td>
+                                                            <a href="{% url 'users:admin_product_view' item.product.id %}">
+                                                                {{ item.product.name }}
+                                                            </a>
+                                                        </td>
+                                                        <td class="text-center">{{ settings.currency }}{{ item.price }}</td>
+                                                        <td class="text-center">{{ item.quantity }}</td>
+                                                        <td class="text-center">{{ settings.currency }}{{ item.subtotal }}</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7"></div>
+                            <div class="col-lg-5">
+                                <div class="order-total-dt">
+                                    <div class="order-total-left-text">
+                                        Sub Total
+                                    </div>
+                                    <div class="order-total-right-text">
+                                        {{ settings.currency }}{{ order.total_amount }}
+                                    </div>
+                                </div>
+                                <div class="order-total-dt">
+                                    <div class="order-total-left-text">
+                                        Delivery Fees
+                                    </div>
+                                    <div class="order-total-right-text">
+                                        {{ settings.currency }}{{ order.delivery_charge|default:"0" }}
+                                    </div>
+                                </div>
+                                <div class="order-total-dt">
+                                    <div class="order-total-left-text fsz-18">
+                                        Total Amount
+                                    </div>
+                                    <div class="order-total-right-text fsz-18">
+                                        {{ settings.currency }}{{ order.grand_total }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7"></div>
+                            <div class="col-lg-5">
+                                <form method="POST" action="{% url 'users:admin.orders.update_status' order.id %}">
+                                    {% csrf_token %}
+                                    <div class="select-status">
+                                        <label for="status">Status*</label>
+                                        <div class="input-group">
+                                            <select id="status" name="status" class="custom-select">
+                                                <option value="pending" {% if order.status == 'pending' %}selected{% endif %}>Pending</option>
+                                                <option value="processing" {% if order.status == 'processing' %}selected{% endif %}>Processing</option>
+                                                <option value="shipped" {% if order.status == 'shipped' %}selected{% endif %}>Shipped</option>
+                                                <option value="delivered" {% if order.status == 'delivered' %}selected{% endif %}>Delivered</option>
+                                                <option value="cancelled" {% if order.status == 'cancelled' %}selected{% endif %}>Cancelled</option>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <button class="status-btn hover-btn" type="submit">Mettre à jour Status</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

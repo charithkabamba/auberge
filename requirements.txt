@@ -1,0 +1,17 @@
+asgiref==3.8.1
+certifi==2024.12.14
+chardet==5.2.0
+charset-normalizer==3.4.0
+dj-stripe==2.8.4
+Django==5.0.8
+django-extensions==3.2.3
+djangorestframework==3.15.2
+idna==3.10
+pillow==11.0.0
+reportlab==4.2.5
+requests==2.32.3
+sqlparse==0.5.2
+stripe==4.2.0
+urllib3==2.2.3
+django-environ==0.10.0
+whitenoise==6.4.0

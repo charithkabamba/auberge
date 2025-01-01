@@ -1,0 +1,32 @@
+<div class="card card-static-2 mb-30">
+    <div class="card-title-2">
+        <h4>Payment Method Analysis</h4>
+    </div>
+    <div class="card-body-table">
+        <div class="table-responsive">
+            <table class="table ucp-table table-hover">
+                <thead>
+                    <tr>
+                        <th>Méthode De paiement</th>
+                        <th>Total Commandes</th>
+                        <th>Total montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for payment in payment_stats %}
+                    <tr>
+                        <td>{{ payment.payment_method|title }}</td>
+                        <td>{{ payment.total_orders }}</td>
+                        <td>{{ settings.currency }}{{ payment.total_amount|floatformat:2 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card-body-table-footer">
+        <ul>
+            <li><button class="download-btn hover-btn" data-format="excel">Exporter à Excel</button></li>
+        </ul>
+    </div>
+</div> 

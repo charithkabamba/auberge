@@ -1,0 +1,47 @@
+{% extends "users/admin/base.html" %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h2 class="mt-30 page-title">Catégories</h2>
+        <ol class="breadcrumb mb-30">
+            <li class="breadcrumb-item"><a href="{% url 'users:admin.index' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:admin_categories' %}">Categories</a></li>
+            <li class="breadcrumb-item active">Editer Categorie</li>
+        </ol>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card card-static-2 mb-30">
+                    <div class="card-title-2">
+                        <h4>Editer Categorie</h4>
+                    </div>
+                    <div class="card-body-table">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Nom Categorie*</label>
+                                <input type="text" class="form-control" name="name" required value="{{ category.name }}">
+                            </div>
+                            <div class="form-group">
+                                <label>Status*</label>
+                                <select class="form-control" name="status" required>
+                                    <option value="active" {% if category.status == 'active' %}selected{% endif %}>Active</option>
+                                    <option value="inactive" {% if category.status == 'inactive' %}selected{% endif %}>Inactive</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Categorie Image</label>
+                                <input type="file" class="form-control" name="image">
+                                {% if category.image %}
+                                    <img src="{{ category.image.url }}" alt="{{ category.name }}" class="img-fluid mt-2" style="max-width: 200px; max-height: 200px;">
+                                {% endif %}
+                            </div>
+                            <button type="submit" class="save-btn hover-btn">Mettre à jour Catégorie</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

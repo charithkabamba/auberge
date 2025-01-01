@@ -1,0 +1,91 @@
+{% extends 'users/admin/base.html' %}
+
+{% block admin_title %}Add Product{% endblock %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h2 class="mt-30 page-title">Plat</h2>
+        <ol class="breadcrumb mb-30">
+            <li class="breadcrumb-item"><a href="{% url 'users:admin.index' %}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'users:admin_products' %}">Products</a></li>
+            <li class="breadcrumb-item active">Ajouter Plat</li>
+        </ol>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card card-static-2 mb-30">
+                    <div class="card-title-2">
+                        <h4>Ajouter nouveau Plat</h4>
+                    </div>
+                    <div class="card-body-table ml-3 mr-3">
+                        <form method="POST" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label>Nom Plat*</label>
+                                <input type="text" class="form-control" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Déscription*</label>
+                                <textarea class="form-control" name="description" rows="3" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Details</label>
+                                <textarea class="form-control" name="additional_details" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Categorie*</label>
+                                <select class="form-control" name="category" required>
+                                    {% for category in categories %}
+                                        <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Prix Original*</label>
+                                <input type="number" class="form-control" name="original_price" step="0.01" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Prix*de Vente</label>
+                                <input type="number" class="form-control" name="selling_price" step="0.01" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Stock*</label>
+                                <input type="number" class="form-control" name="stock" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Stock Unit*</label>
+                                <select class="form-control" name="stock_unit" required>
+                                    {% for value, label in stock_units %}
+                                        <option value="{{ value }}">{{ label }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Minimum Stock</label>
+                                <input type="number" class="form-control" name="minimum_stock" min="0" value="0">
+                            </div>
+                            <div class="form-group">
+                                <label>AUBERGE*</label>
+                                <input type="text" class="form-control" name="sku" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Status*</label>
+                                <select class="form-control" name="status" required>
+                                    <option value="active">Active</option>
+                                    <option value="inactive">Inactive</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Plat Images*</label>
+                                <input type="file" class="form-control" name="images" multiple accept="image/*" required>
+                                <small class="form-text text-muted">Premier image sera comme envoyée comme une image primaire</small>
+                            </div>
+                            <button type="submit" class="save-btn hover-btn">Ajouter Plat</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %} 

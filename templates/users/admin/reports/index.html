@@ -1,0 +1,82 @@
+{% extends "users/admin/base.html" %}
+
+{% block content %}
+<main>
+    <div class="container-fluid">
+        <h2 class="mt-30 page-title">Rapports</h2>
+        <ol class="breadcrumb mb-30">
+            <li class="breadcrumb-item"><a href="{% url 'users:admin.index' %}">Dashboard</a></li>
+            <li class="breadcrumb-item active">Rapports</li>
+        </ol>
+        <div class="row">
+            <div class="col-lg-4 col-md-5">
+                <div class="card card-static-2 mb-30">
+                    <div class="card-title-2">
+                        <h4>Rapport Filtres</h4>
+                    </div>
+                    <div class="card-body-table">
+                        <form method="GET" class="news-content-right pd-20">
+                            <div class="form-group">
+                                <label class="form-label">Rapport Type*</label>
+                                <select name="type" class="form-control">
+                                    <option value="sales" {% if report_type == 'sales' %}selected{% endif %}>Vente Report</option>
+                                    <option value="products" {% if report_type == 'products' %}selected{% endif %}>Plat Performance</option>
+                                    <option value="customers" {% if report_type == 'customers' %}selected{% endif %}>Client Analyse</option>
+                                    <option value="payment" {% if report_type == 'payment' %}selected{% endif %}>Méthode de Paiement</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Date Du Début</label>
+                                <input type="date" name="start_date" class="form-control" value="{{ start_date|default:'' }}">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Date Fin</label>
+                                <input type="date" name="end_date" class="form-control" value="{{ end_date|default:'' }}">
+                            </div>
+                            <button class="save-btn hover-btn" type="submit">Générer Rapport</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-7">
+                {% if report_type == 'sales' %}
+                    {% include 'users/admin/reports/includes/sales_report.html' %}
+                {% elif report_type == 'products' %}
+                    {% include 'users/admin/reports/includes/product_report.html' %}
+                {% elif report_type == 'customers' %}
+                    {% include 'users/admin/reports/includes/customer_report.html' %}
+                {% elif report_type == 'payment' %}
+                    {% include 'users/admin/reports/includes/payment_report.html' %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const downloadButtons = document.querySelectorAll('.download-btn');
+    downloadButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const format = this.dataset.format;
+            const reportTable = this.closest('.card').querySelector('table');
+            
+            if (format === 'excel') {
+                exportTableToExcel(reportTable);
+            } else {
+                // Handle other formats
+            }
+        });
+    });
+});
+
+function exportTableToExcel(table) {
+    const html = table.outerHTML;
+    const url = 'data:application/vnd.ms-excel,' + encodeURIComponent(html);
+    const link = document.createElement('a');
+    link.download = 'report.xls';
+    link.href = url;
+    link.click();
+}
+</script>
+{% endblock %}

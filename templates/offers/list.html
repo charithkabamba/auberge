@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+
+{% block title %}Special Offers{% endblock %}
+
+{% block content %}
+<div class="wrapper">
+    <div class="gambo-Breadcrumb">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{% url 'core:home' %}">Accueil</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Offre Spécial</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="all-product-grid">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="main-title-tt">
+                        <div class="main-title-left">
+                            <h2>Special Offre</h2>
+                        </div>
+                    </div>
+                </div>
+                {% if offers %}
+                    {% for offer in offers %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="offer-item">
+                            <div class="offer-card">
+                                {% if offer.image %}
+                                    <img src="{{ offer.image.url }}" alt="{{ offer.title }}" class="offer-img">
+                                {% endif %}
+                                <div class="offer-content">
+                                    <h3>{{ offer.title }}</h3>
+                                    <div class="offer-details">
+                                        {% if offer.offer_type == 'percentage' %}
+                                            <div class="discount-badge">{{ offer.discount_value }}% OFF</div>
+                                        {% elif offer.offer_type == 'fixed' %}
+                                            <div class="discount-badge">{{ settings.currency }}{{ offer.discount_value }} OFF</div>
+                                        {% else %}
+                                            <div class="discount-badge">Buy {{ offer.buy_quantity }} Get {{ offer.get_quantity }}</div>
+                                        {% endif %}
+                                    </div>
+                                    <p>{{ offer.description }}</p>
+                                    {% if offer.min_purchase_amount > 0 %}
+                                        <div class="min-purchase">
+                                            Achat Minimum : {{ settings.currency }}{{ offer.min_purchase_amount }}
+                                        </div>
+                                    {% endif %}
+                                    <div class="offer-validity">
+                                        Valide jusqu'au : {{ offer.end_date|date:"M d, Y" }}
+                                    </div>
+                                    {% if offer.products.exists %}
+                                        <div class="offer-products mt-3">
+                                            <a href="#" class="btn btn-outline-primary btn-sm" 
+                                               data-toggle="collapse" 
+                                               data-target="#offerProducts{{ offer.id }}">
+                                                Voir les plats
+                                            </a>
+                                            <div id="offerProducts{{ offer.id }}" class="collapse mt-2">
+                                                <div class="row">
+                                                    {% for product in offer.products.all %}
+                                                    <div class="col-6">
+                                                        <a href="{% url 'products:detail' product.slug %}" 
+                                                           class="offer-product-link">
+                                                            <div class="offer-product-item">
+                                                                {% if product.primary_image %}
+                                                                    <img src="{{ product.primary_image.image.url }}" 
+                                                                         alt="{{ product.name }}">
+                                                                {% endif %}
+                                                                <span>{{ product.name }}</span>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="col-12">
+                        <div class="no-offers text-center py-5">
+                            <i class="uil uil-gift" style="font-size: 50px;"></i>
+                            <h3>Offre non activé</h3>
+                            <p>Veuillez revenir plus tart !</p>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.offer-item {
+    margin-bottom: 30px;
+}
+
+.offer-card {
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+
+.offer-card:hover {
+    transform: translateY(-5px);
+}
+
+.offer-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.offer-content {
+    padding: 20px;
+}
+
+.offer-content h3 {
+    color: #2b2f4c;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.offer-details {
+    margin-bottom: 15px;
+}
+
+.discount-badge {
+    display: inline-block;
+    background: #f55d2c;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.min-purchase {
+    font-size: 14px;
+    color: #666;
+    margin-top: 10px;
+}
+
+.offer-validity {
+    font-size: 13px;
+    color: #999;
+    margin-top: 10px;
+}
+
+.offer-product-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.offer-product-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    background: #f8f9fa;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.offer-product-item img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.offer-product-item span {
+    font-size: 13px;
+    color: #2b2f4c;
+}
+</style>
+{% endblock %} 
